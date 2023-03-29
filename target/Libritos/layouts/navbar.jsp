@@ -24,7 +24,7 @@
 
             <li class="menu-title">Recursos</li>
             <li>
-                <a href="Home?modulo=Recurso Humano" class="waves-effect"><i class="mdi mdi-book"></i><span> Libros </span></a>
+                <a href="/Libritos/Libros" class="waves-effect"><i class="mdi mdi-book"></i><span> Libros </span></a>
             </li>
 
             <li>

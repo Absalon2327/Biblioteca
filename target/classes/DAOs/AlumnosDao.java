@@ -45,6 +45,7 @@ public class AlumnosDao {
         java.sql.Date fechaIngreso = new java.sql.Date(alumno.getFechaIngreso().getTime());
         System.out.println("fechaNacimiento: " + fechaNacimiento);
         try {
+            //sql = "EXEC Insert_Alumno(?,?,?,?,?,?,?,?)"
             String sql = "INSERT INTO tb_alumno(carnet, nombre, apellido, direccion, fechanacimiento, fechaingreso, genero, estado)" +
                     "values(?,?,?,?,?,?,?,?)";
             PreparedStatement st = con.prepareStatement(sql);
@@ -100,6 +101,7 @@ public class AlumnosDao {
 
         int resultadoModificar = 0;
         try {
+
             String sql = "UPDATE tb_alumno SET nombre = ?, apellido = ?, direccion = ?, fechanacimiento = ?," +
                     "fechaingreso = ?, genero = ?, estado = ? WHERE carnet = '" + alumno.getCarnet() +"'";
             PreparedStatement st = con.prepareStatement(sql);
