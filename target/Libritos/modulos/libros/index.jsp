@@ -37,7 +37,7 @@
 
          class="mdi mdi-black-mesa"></i></span>
                                 <div class="mini-stat-info">
-                                    <span id="autores_registrados" class="counter text-blue-grey">0</span>
+                                    <span id="libros_registrados" class="counter text-blue-grey"></span>
                                     Libros registrados
                                 </div>
                                 <div class="clearfix"></div>
@@ -49,7 +49,7 @@
          class="mdi mdi-account"></i></span>
                                 <div class="mini-stat-info">
                                     <span class="counter text-teal">Registrar</span>
-                                    Autor
+                                    Libro
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -59,7 +59,7 @@
                         <div class="col-12">
                             <div class="card m-b-20">
                                 <div class="card-body">
-                                    <div id="tbAutores"></div>
+                                    <div id="tbLibros"></div>
                                 </div>
                             </div>
                         </div>
@@ -170,4 +170,4 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <%@page import="java.time.LocalDateTime" %>
     <%@ page import="java.time.temporal.ChronoField" %>
-    <script src="./modulos/autores/funciones_libros.js"></script>
+    <script src="./modulos/libros/funciones_libros.js"></script>
