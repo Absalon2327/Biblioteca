@@ -9,9 +9,9 @@ public class Conexion {
     public Connection con = null;
 
     public Connection abrirConexion() throws  ClassNotFoundException, SQLException{
-        String url = "jdbc:postgresql://localhost:5432/db_libros";
-        String user = "postgres";
-        String password = "root";
+        String url = "jdbc:sqlserver://localhost:1433;encrypt=false;databaseName=db_libros";
+        String user = "sa";
+        String password = "Root123.$";
         try {
             System.out.println("Conexion exitosa");
             return con = DriverManager.getConnection(url, user, password);
