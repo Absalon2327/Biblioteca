@@ -19,7 +19,7 @@
 
             <li class="menu-title">Prestamos</li>
             <li>
-                <a href="Home?modulo=Recurso Humano" class="waves-effect"><i class="mdi mdi-file"></i><span> Registro </span></a>
+                <a href="/Libritos/Prestamos" class="waves-effect"><i class="mdi mdi-file"></i><span> Registro </span></a>
             </li>
 
             <li class="menu-title">Recursos</li>
