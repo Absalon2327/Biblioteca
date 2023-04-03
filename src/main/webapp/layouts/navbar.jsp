@@ -38,6 +38,11 @@
             <li>
                 <a href="/Libritos/Alumnos" class=""><i class="mdi mdi-human"></i><span> Alumnos </span></a>
             </li>
+
+            <li class="menu-title">Consultas</li>
+            <li>
+                <a href="/Libritos/Consulta1" class="waves-effect"><i class="mdi mdi-file"></i><span> 1. Lista de alumnos con edad </span></a>
+            </li>
         </ul>
     </div>
     <div class="clearfix"></div>
