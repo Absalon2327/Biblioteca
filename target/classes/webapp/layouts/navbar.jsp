@@ -43,6 +43,9 @@
             <li>
                 <a href="/Libritos/Consulta1" class="waves-effect"><i class="mdi mdi-file"></i><span> 1. Lista de alumnos con edad </span></a>
             </li>
+            <li>
+               <a href="/Libritos/Consulta5" class="waves-effect"><i class="mdi mdi-file"></i><span> 5. Lista de Libros por categoria </span></a>
+             </li>
         </ul>
     </div>
     <div class="clearfix"></div>
