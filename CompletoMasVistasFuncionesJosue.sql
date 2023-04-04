@@ -12,7 +12,7 @@
  Target Server Version : 15004298
  File Encoding         : 65001
 
- Date: 02/04/2023 16:59:56
+ Date: 03/04/2023 22:38:33
 */
 
 
@@ -160,6 +160,15 @@ GO
 INSERT INTO [dbo].[tb_libro] ([codi libro], [titulolibro], [existencia], [codi cate ria], [precio], [codi autor]) VALUES (N'1234', N'Pepito', N'65', N'1', N'0.35', N'1')
 GO
 
+INSERT INTO [dbo].[tb_libro] ([codi libro], [titulolibro], [existencia], [codi cate ria], [precio], [codi autor]) VALUES (N'3234', N'Pepe el grillo', N'6', N'3', N'0.22', N'1')
+GO
+
+INSERT INTO [dbo].[tb_libro] ([codi libro], [titulolibro], [existencia], [codi cate ria], [precio], [codi autor]) VALUES (N'7891', N'Don quijote', N'41', N'3', N'0.24', N'2')
+GO
+
+INSERT INTO [dbo].[tb_libro] ([codi libro], [titulolibro], [existencia], [codi cate ria], [precio], [codi autor]) VALUES (N'7896', N'Harry Potter', N'98', N'2', N'0.83', N'1')
+GO
+
 COMMIT
 GO
 
@@ -199,6 +208,20 @@ GO
 
 
 -- ----------------------------
+-- View structure for vistaconsulta1
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[vistaconsulta1]') AND type IN ('V'))
+	DROP VIEW [dbo].[vistaconsulta1]
+GO
+
+CREATE VIEW [dbo].[vistaconsulta1] AS SELECT carnet, nombre, apellido, DATEDIFF(year, fechanacimiento, GETDATE()) as edad, 
+DATEDIFF(day, fechanacimiento, GETDATE()) / 365.25 AS edad_exacta, 
+CAST(DATEDIFF(day, fechanacimiento, GETDATE()) / 365.25 as int) AS edad_real 
+from db_libros.dbo.tb_alumno
+GO
+
+
+-- ----------------------------
 -- View structure for vistalibros
 -- ----------------------------
 IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[vistalibros]') AND type IN ('V'))
@@ -222,6 +245,35 @@ CREATE VIEW [dbo].[vistaprestamos] AS SELECT p.[codi _prestamo] as codiprestamo,
 FROM db_libros.dbo.tb_prestamo_alumno as p 
 INNER JOIN db_libros.dbo.tb_alumno as a on p.carnet_alumno = a.carnet
 INNER JOIN db_libros.dbo.tb_libro as l on p.[codi _libro] = l.[codi libro]
+GO
+
+
+-- ----------------------------
+-- View structure for vistaselectcategorias
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[vistaselectcategorias]') AND type IN ('V'))
+	DROP VIEW [dbo].[vistaselectcategorias]
+GO
+
+CREATE VIEW [dbo].[vistaselectcategorias] AS SELECT c.[codi cate ria] as codigo, c.[nombrecate ria] as nombre FROM db_libros.dbo.[tb_cate ria] as c 
+INNER JOIN db_libros.dbo.tb_libro as l ON c.[codi cate ria] = l.[codi cate ria] GROUP BY c.[codi cate ria], c.[nombrecate ria]
+GO
+
+
+-- ----------------------------
+-- function structure for funcionconsulta5
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[funcionconsulta5]') AND type IN ('FN', 'FS', 'FT', 'IF', 'TF'))
+	DROP FUNCTION[dbo].[funcionconsulta5]
+GO
+
+CREATE FUNCTION [dbo].[funcionconsulta5] (@parametro int)
+RETURNS TABLE
+AS
+RETURN
+(
+	SELECT l.[codi libro] as codigolibro, l.titulolibro , l.precio FROM db_libros.dbo.tb_libro as l WHERE l.[codi cate ria] = @parametro
+);
 GO
 
 
