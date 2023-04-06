@@ -12,7 +12,7 @@
  Target Server Version : 15004298
  File Encoding         : 65001
 
- Date: 03/04/2023 22:38:33
+ Date: 06/04/2023 11:07:47
 */
 
 
@@ -48,7 +48,7 @@ GO
 INSERT INTO [dbo].[tb_alumno] ([carnet], [nombre], [apellido], [direccion], [fechanacimiento], [fechaingreso], [genero], [estado]) VALUES (N'CM16057', N'Cristian', N'Mejía', N'San Vicente', N'1997-09-27', N'2016-01-16', N'Masculino', N't')
 GO
 
-INSERT INTO [dbo].[tb_alumno] ([carnet], [nombre], [apellido], [direccion], [fechanacimiento], [fechaingreso], [genero], [estado]) VALUES (N'FC16056', N'Fabricio', N'Corvera', N'Santo Domin , San Vicente', N'1991-09-27', N'2016-01-16', N'Masculino', N't')
+INSERT INTO [dbo].[tb_alumno] ([carnet], [nombre], [apellido], [direccion], [fechanacimiento], [fechaingreso], [genero], [estado]) VALUES (N'FC16056', N'Fabricio', N'Corvera', N'Santo Domingo, San Vicente', N'1991-09-27', N'2016-01-16', N'Masculino', N't')
 GO
 
 COMMIT
@@ -63,7 +63,7 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[tb
 GO
 
 CREATE TABLE [dbo].[tb_autor] (
-  [codi autor] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
+  [codigoautor] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
   [nombreautor] nvarchar(60) COLLATE Modern_Spanish_CI_AS  NULL,
   [apellidoautor] nvarchar(35) COLLATE Modern_Spanish_CI_AS  NULL,
   [fechanacimientoautor] date  NULL,
@@ -81,10 +81,10 @@ GO
 BEGIN TRANSACTION
 GO
 
-INSERT INTO [dbo].[tb_autor] ([codi autor], [nombreautor], [apellidoautor], [fechanacimientoautor], [nacionalidad]) VALUES (N'1', N'Fabricio', N'CorverU', N'1997-09-27', N'Nacional')
+INSERT INTO [dbo].[tb_autor] ([codigoautor], [nombreautor], [apellidoautor], [fechanacimientoautor], [nacionalidad]) VALUES (N'1', N'Fabricio', N'CorverU', N'1997-09-27', N'Nacional')
 GO
 
-INSERT INTO [dbo].[tb_autor] ([codi autor], [nombreautor], [apellidoautor], [fechanacimientoautor], [nacionalidad]) VALUES (N'2', N'Cristian', N'Mejía', N'1986-09-27', N'Nacional')
+INSERT INTO [dbo].[tb_autor] ([codigoautor], [nombreautor], [apellidoautor], [fechanacimientoautor], [nacionalidad]) VALUES (N'2', N'Cristian', N'Mejía', N'1986-09-27', N'Nacional')
 GO
 
 COMMIT
@@ -92,38 +92,38 @@ GO
 
 
 -- ----------------------------
--- Table structure for tb_cate ria
+-- Table structure for tb_categoria
 -- ----------------------------
-IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[tb_cate ria]') AND type IN ('U'))
-	DROP TABLE [dbo].[tb_cate ria]
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[tb_categoria]') AND type IN ('U'))
+	DROP TABLE [dbo].[tb_categoria]
 GO
 
-CREATE TABLE [dbo].[tb_cate ria] (
-  [codi cate ria] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
-  [nombrecate ria] nvarchar(50) COLLATE Modern_Spanish_CI_AS  NOT NULL
+CREATE TABLE [dbo].[tb_categoria] (
+  [codigocategoria] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
+  [nombrecategoria] nvarchar(50) COLLATE Modern_Spanish_CI_AS  NOT NULL
 )
 GO
 
-ALTER TABLE [dbo].[tb_cate ria] SET (LOCK_ESCALATION = TABLE)
+ALTER TABLE [dbo].[tb_categoria] SET (LOCK_ESCALATION = TABLE)
 GO
 
 
 -- ----------------------------
--- Records of tb_cate ria
+-- Records of tb_categoria
 -- ----------------------------
 BEGIN TRANSACTION
 GO
 
-INSERT INTO [dbo].[tb_cate ria] ([codi cate ria], [nombrecate ria]) VALUES (N'1', N'Terrorifico')
+INSERT INTO [dbo].[tb_categoria] ([codigocategoria], [nombrecategoria]) VALUES (N'1', N'Terrorifico')
 GO
 
-INSERT INTO [dbo].[tb_cate ria] ([codi cate ria], [nombrecate ria]) VALUES (N'2', N'Drama')
+INSERT INTO [dbo].[tb_categoria] ([codigocategoria], [nombrecategoria]) VALUES (N'2', N'Drama')
 GO
 
-INSERT INTO [dbo].[tb_cate ria] ([codi cate ria], [nombrecate ria]) VALUES (N'3', N'Ficcioncita')
+INSERT INTO [dbo].[tb_categoria] ([codigocategoria], [nombrecategoria]) VALUES (N'3', N'Ficcioncita')
 GO
 
-INSERT INTO [dbo].[tb_cate ria] ([codi cate ria], [nombrecate ria]) VALUES (N'4', N'Acción')
+INSERT INTO [dbo].[tb_categoria] ([codigocategoria], [nombrecategoria]) VALUES (N'4', N'Acción')
 GO
 
 COMMIT
@@ -138,12 +138,12 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[tb
 GO
 
 CREATE TABLE [dbo].[tb_libro] (
-  [codi libro] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
+  [codigolibro] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
   [titulolibro] nvarchar(100) COLLATE Modern_Spanish_CI_AS  NOT NULL,
   [existencia] int  NOT NULL,
-  [codi cate ria] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
+  [codigocategoria] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
   [precio] decimal(14,2)  NOT NULL,
-  [codi autor] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NULL
+  [codigoautor] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NULL
 )
 GO
 
@@ -157,16 +157,19 @@ GO
 BEGIN TRANSACTION
 GO
 
-INSERT INTO [dbo].[tb_libro] ([codi libro], [titulolibro], [existencia], [codi cate ria], [precio], [codi autor]) VALUES (N'1234', N'Pepito', N'65', N'1', N'0.35', N'1')
+INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'12345', N'Don Quijote de la Mancha', N'25', N'1', N'0.25', N'1')
 GO
 
-INSERT INTO [dbo].[tb_libro] ([codi libro], [titulolibro], [existencia], [codi cate ria], [precio], [codi autor]) VALUES (N'3234', N'Pepe el grillo', N'6', N'3', N'0.22', N'1')
+INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'35214', N'Harry Potter', N'14', N'3', N'2.00', N'2')
 GO
 
-INSERT INTO [dbo].[tb_libro] ([codi libro], [titulolibro], [existencia], [codi cate ria], [precio], [codi autor]) VALUES (N'7891', N'Don quijote', N'41', N'3', N'0.24', N'2')
+INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'75123', N'Pepito', N'96', N'4', N'0.60', N'1')
 GO
 
-INSERT INTO [dbo].[tb_libro] ([codi libro], [titulolibro], [existencia], [codi cate ria], [precio], [codi autor]) VALUES (N'7896', N'Harry Potter', N'98', N'2', N'0.83', N'1')
+INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'78546', N'Alicia en el país de las maravillas', N'47', N'2', N'0.47', N'2')
+GO
+
+INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'95123', N'Mago de Oz', N'31', N'1', N'0.95', N'1')
 GO
 
 COMMIT
@@ -182,9 +185,9 @@ GO
 
 CREATE TABLE [dbo].[tb_prestamo_alumno] (
   [carnet_alumno] nvarchar(7) COLLATE Modern_Spanish_CI_AS  NOT NULL,
-  [codi _libro] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
+  [codigo_libro] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
   [fche_prestamo] date  NOT NULL,
-  [codi _prestamo] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
+  [codigo_prestamo] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
   [cantidadprestamo] int  NOT NULL,
   [fecha_devolucion] date  NOT NULL
 )
@@ -200,7 +203,7 @@ GO
 BEGIN TRANSACTION
 GO
 
-INSERT INTO [dbo].[tb_prestamo_alumno] ([carnet_alumno], [codi _libro], [fche_prestamo], [codi _prestamo], [cantidadprestamo], [fecha_devolucion]) VALUES (N'CM16057', N'1234', N'2023-04-14', N'1', N'2', N'2025-04-23')
+INSERT INTO [dbo].[tb_prestamo_alumno] ([carnet_alumno], [codigo_libro], [fche_prestamo], [codigo_prestamo], [cantidadprestamo], [fecha_devolucion]) VALUES (N'CM16057', N'35214', N'2022-04-01', N'1', N'5', N'2022-04-05')
 GO
 
 COMMIT
@@ -228,9 +231,9 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[vi
 	DROP VIEW [dbo].[vistalibros]
 GO
 
-CREATE VIEW [dbo].[vistalibros] AS SELECT l.[codi libro] as codigolibro, l.titulolibro , l.existencia , c.[nombrecate ria] as nombrecategoria, l.precio, a.nombreautor FROM db_libros.dbo.tb_libro as l 
-inner join db_libros.dbo.tb_autor as a on a.[codi autor] = l.[codi autor] 
-inner join db_libros.dbo.[tb_cate ria] as c on c.[codi cate ria] = l.[codi cate ria];
+CREATE VIEW [dbo].[vistalibros] AS SELECT l.codigolibro, l.titulolibro , l.existencia , c.nombrecategoria, l.precio, a.nombreautor FROM db_libros.dbo.tb_libro as l 
+inner join db_libros.dbo.tb_autor as a on a.codigoautor = l.codigoautor 
+inner join db_libros.dbo.tb_categoria as c on c.codigocategoria = l.codigocategoria
 GO
 
 
@@ -241,10 +244,10 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[vi
 	DROP VIEW [dbo].[vistaprestamos]
 GO
 
-CREATE VIEW [dbo].[vistaprestamos] AS SELECT p.[codi _prestamo] as codiprestamo, p.carnet_alumno, a.apellido, a.nombre, p.[codi _libro] as codilibro, l.titulolibro, p.fche_prestamo, p.cantidadprestamo, p.fecha_devolucion
+CREATE VIEW [dbo].[vistaprestamos] AS SELECT p.codigo_prestamo as codiprestamo, p.carnet_alumno, a.apellido, a.nombre, p.codigo_libro as codilibro, l.titulolibro, p.fche_prestamo, p.cantidadprestamo, p.fecha_devolucion
 FROM db_libros.dbo.tb_prestamo_alumno as p 
 INNER JOIN db_libros.dbo.tb_alumno as a on p.carnet_alumno = a.carnet
-INNER JOIN db_libros.dbo.tb_libro as l on p.[codi _libro] = l.[codi libro]
+INNER JOIN db_libros.dbo.tb_libro as l on p.codigo_libro = l.codigolibro
 GO
 
 
@@ -255,8 +258,8 @@ IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[vi
 	DROP VIEW [dbo].[vistaselectcategorias]
 GO
 
-CREATE VIEW [dbo].[vistaselectcategorias] AS SELECT c.[codi cate ria] as codigo, c.[nombrecate ria] as nombre FROM db_libros.dbo.[tb_cate ria] as c 
-INNER JOIN db_libros.dbo.tb_libro as l ON c.[codi cate ria] = l.[codi cate ria] GROUP BY c.[codi cate ria], c.[nombrecate ria]
+CREATE VIEW [dbo].[vistaselectcategorias] AS SELECT c.codigocategoria as codigo, c.nombrecategoria as nombre FROM db_libros.dbo.tb_categoria as c 
+INNER JOIN db_libros.dbo.tb_libro as l ON c.codigocategoria = l.codigocategoria GROUP BY c.codigocategoria, c.nombrecategoria
 GO
 
 
@@ -272,7 +275,7 @@ RETURNS TABLE
 AS
 RETURN
 (
-	SELECT l.[codi libro] as codigolibro, l.titulolibro , l.precio FROM db_libros.dbo.tb_libro as l WHERE l.[codi cate ria] = @parametro
+	SELECT l.codigolibro as codigolibro, l.titulolibro , l.precio FROM db_libros.dbo.tb_libro as l WHERE l.codigocategoria = @parametro
 );
 GO
 
@@ -299,16 +302,16 @@ GO
 -- ----------------------------
 -- Primary Key structure for table tb_autor
 -- ----------------------------
-ALTER TABLE [dbo].[tb_autor] ADD CONSTRAINT [tb_autor_pkey] PRIMARY KEY CLUSTERED ([codi autor])
+ALTER TABLE [dbo].[tb_autor] ADD CONSTRAINT [tb_autor_pkey] PRIMARY KEY CLUSTERED ([codigoautor])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
 
 
 -- ----------------------------
--- Primary Key structure for table tb_cate ria
+-- Primary Key structure for table tb_categoria
 -- ----------------------------
-ALTER TABLE [dbo].[tb_cate ria] ADD CONSTRAINT [tb_cate ria_pkey] PRIMARY KEY CLUSTERED ([codi cate ria])
+ALTER TABLE [dbo].[tb_categoria] ADD CONSTRAINT [tb_categoria_pkey] PRIMARY KEY CLUSTERED ([codigocategoria])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -317,7 +320,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table tb_libro
 -- ----------------------------
-ALTER TABLE [dbo].[tb_libro] ADD CONSTRAINT [tb_libro_pkey] PRIMARY KEY CLUSTERED ([codi libro])
+ALTER TABLE [dbo].[tb_libro] ADD CONSTRAINT [tb_libro_pkey] PRIMARY KEY CLUSTERED ([codigolibro])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -333,7 +336,7 @@ GO
 -- ----------------------------
 -- Primary Key structure for table tb_prestamo_alumno
 -- ----------------------------
-ALTER TABLE [dbo].[tb_prestamo_alumno] ADD CONSTRAINT [tb_prestamo_alumno_pkey] PRIMARY KEY CLUSTERED ([codi _prestamo])
+ALTER TABLE [dbo].[tb_prestamo_alumno] ADD CONSTRAINT [tb_prestamo_alumno_pkey] PRIMARY KEY CLUSTERED ([codigo_prestamo])
 WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
 ON [PRIMARY]
 GO
@@ -342,10 +345,10 @@ GO
 -- ----------------------------
 -- Foreign Keys structure for table tb_libro
 -- ----------------------------
-ALTER TABLE [dbo].[tb_libro] ADD CONSTRAINT [fk_autor] FOREIGN KEY ([codi autor]) REFERENCES [dbo].[tb_autor] ([codi autor]) ON DELETE CASCADE ON UPDATE CASCADE
+ALTER TABLE [dbo].[tb_libro] ADD CONSTRAINT [fk_autor] FOREIGN KEY ([codigoautor]) REFERENCES [dbo].[tb_autor] ([codigoautor]) ON DELETE CASCADE ON UPDATE CASCADE
 GO
 
-ALTER TABLE [dbo].[tb_libro] ADD CONSTRAINT [fk_cate ria] FOREIGN KEY ([codi cate ria]) REFERENCES [dbo].[tb_cate ria] ([codi cate ria]) ON DELETE CASCADE ON UPDATE CASCADE
+ALTER TABLE [dbo].[tb_libro] ADD CONSTRAINT [fk_categoria] FOREIGN KEY ([codigocategoria]) REFERENCES [dbo].[tb_categoria] ([codigocategoria]) ON DELETE CASCADE ON UPDATE CASCADE
 GO
 
 
@@ -355,6 +358,6 @@ GO
 ALTER TABLE [dbo].[tb_prestamo_alumno] ADD CONSTRAINT [fk_alumno] FOREIGN KEY ([carnet_alumno]) REFERENCES [dbo].[tb_alumno] ([carnet]) ON DELETE CASCADE ON UPDATE CASCADE
 GO
 
-ALTER TABLE [dbo].[tb_prestamo_alumno] ADD CONSTRAINT [fk_libro] FOREIGN KEY ([codi _libro]) REFERENCES [dbo].[tb_libro] ([codi libro]) ON DELETE CASCADE ON UPDATE CASCADE
+ALTER TABLE [dbo].[tb_prestamo_alumno] ADD CONSTRAINT [fk_libro] FOREIGN KEY ([codigo_libro]) REFERENCES [dbo].[tb_libro] ([codigolibro]) ON DELETE CASCADE ON UPDATE CASCADE
 GO
 
