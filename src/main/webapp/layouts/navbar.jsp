@@ -41,10 +41,10 @@
 
             <li class="menu-title">Consultas</li>
             <li>
-                <a href="/Libritos/Consulta1" class="waves-effect"><i class="mdi mdi-file"></i><span> 1. Lista de alumnos con edad </span></a>
+                <a href="/Libritos/Consulta1" class="waves-effect"><i class="mdi mdi-file"></i><span>Consulta 1</span></a>
             </li>
             <li>
-               <a href="/Libritos/Consulta5" class="waves-effect"><i class="mdi mdi-file"></i><span> 5. Lista de Libros por categoria </span></a>
+               <a href="/Libritos/Consulta5" class="waves-effect"><i class="mdi mdi-file"></i><span>Consulta 5</span></a>
              </li>
         </ul>
     </div>
