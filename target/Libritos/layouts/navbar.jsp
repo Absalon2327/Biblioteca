@@ -6,7 +6,7 @@
 <div class="topbar-left">
     <div class="">
         <!--<a href="index.php" class="logo text-center">Admiria</a>-->
-        <a href="index.php" class="logo"><img src="public/assets/images/icon_libros.png" height="90" alt="logo"></a>
+        <a href="index.jsp" class="logo"><img src="public/assets/images/icon_libros.png" height="90" alt="logo"></a>
     </div>
 </div>
 
@@ -19,32 +19,36 @@
 
             <li class="menu-title">Prestamos</li>
             <li>
-                <a href="/Libritos/Prestamos" class="waves-effect"><i class="mdi mdi-file"></i><span> Registro </span></a>
+                <a href="Rutas?modulos=prestamos" class="waves-effect"><i class="mdi mdi-file"></i><span> Registro </span></a>
             </li>
 
             <li class="menu-title">Recursos</li>
             <li>
-                <a href="/Libritos/Libros" class="waves-effect"><i class="mdi mdi-book"></i><span> Libros </span></a>
+                <a href="Rutas?modulos=libros" class="waves-effect"><i class="mdi mdi-book"></i><span> Libros </span></a>
             </li>
 
             <li>
-                <a href="/Libritos/autores" class=""><i class="mdi mdi-human"></i><span> Autores </span></a>
+                <a href="Rutas?modulos=autores" class=""><i class="mdi mdi-human"></i><span> Autores </span></a>
             </li>
 
             <li>
-                <a href="/Libritos/RegCatLib" class="waves-effect"><i class="mdi mdi-book-multiple"></i><span> Categorías de Libros</span></a>
+                <a href="Rutas?modulos=catLibros" class="waves-effect"><i class="mdi mdi-book-multiple"></i><span> Categorías de Libros</span></a>
             </li>
 
             <li>
-                <a href="/Libritos/Alumnos" class=""><i class="mdi mdi-human"></i><span> Alumnos </span></a>
+                <a href="Rutas?modulos=alumnos" class=""><i class="mdi mdi-human"></i><span> Alumnos </span></a>
+            </li>
+
+            <li>
+                <a href="Rutas?modulos=usuarios" class=""><i class="mdi mdi-human"></i><span> Usuarios </span></a>
             </li>
 
             <li class="menu-title">Consultas</li>
             <li>
-                <a href="/Libritos/Consulta1" class="waves-effect"><i class="mdi mdi-file"></i><span> 1. Lista de alumnos con edad </span></a>
+                <a href="Rutas?modulos=consulta1" class="waves-effect"><i class="mdi mdi-file"></i><span> 1. Lista de alumnos con edad </span></a>
             </li>
             <li>
-               <a href="/Libritos/Consulta5" class="waves-effect"><i class="mdi mdi-file"></i><span> 5. Lista de Libros por categoria </span></a>
+               <a href="Rutas?modulos=consulta5" class="waves-effect"><i class="mdi mdi-file"></i><span> 5. Lista de Libros por categoria </span></a>
              </li>
         </ul>
     </div>

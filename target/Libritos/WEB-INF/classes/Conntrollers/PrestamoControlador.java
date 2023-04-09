@@ -15,10 +15,7 @@ import java.sql.SQLException;
 public class PrestamoControlador extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String nombre = (String) session.getAttribute("nombre");
-        System.out.println("Inicio sesión: " + nombre);
-        request.getRequestDispatcher("/modulos/prestamos/index.jsp").forward(request, response);
+
     }
 
     @Override

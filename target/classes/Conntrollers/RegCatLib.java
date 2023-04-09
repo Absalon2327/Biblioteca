@@ -17,10 +17,7 @@ import java.sql.SQLException;
 public class RegCatLib extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        String nombre = (String) session.getAttribute("nombre");
-        System.out.println("Inicio sesión: " + nombre);
-        req.getRequestDispatcher("/modulos/catLibros/index.jsp").forward(req, resp);
+
     }
 
     @Override
