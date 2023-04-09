@@ -14,7 +14,7 @@
     <div id="sidebar-menu">
         <ul>
             <li>
-                <a href="Home" class="waves-effect"><i class="mdi mdi-home"></i><span> Home </span></a>
+                <a href="Rutas?modulos=prestamos" class="waves-effect"><i class="mdi mdi-home"></i><span> Home </span></a>
             </li>
 
             <li class="menu-title">Prestamos</li>
@@ -45,10 +45,10 @@
 
             <li class="menu-title">Consultas</li>
             <li>
-                <a href="Rutas?modulos=consulta1" class="waves-effect"><i class="mdi mdi-file"></i><span> 1. Lista de alumnos con edad </span></a>
+                <a href="Rutas?modulos=consulta1" class="waves-effect"><i class="mdi mdi-file"></i><span>Consulta 1</span></a>
             </li>
             <li>
-               <a href="Rutas?modulos=consulta5" class="waves-effect"><i class="mdi mdi-file"></i><span> 5. Lista de Libros por categoria </span></a>
+               <a href="Rutas?modulos=consulta5" class="waves-effect"><i class="mdi mdi-file"></i><span>Consulta 5</span></a>
              </li>
         </ul>
     </div>
