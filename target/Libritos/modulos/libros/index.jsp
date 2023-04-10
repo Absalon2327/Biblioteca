@@ -33,9 +33,7 @@
                     <div class="row">
                         <div class="col-md-6 col-xl-6">
                             <div class="mini-stat clearfix bg-white">
- <span class="mini-stat-icon bg-blue-grey mr-0 float-right"><i
-
-         class="mdi mdi-black-mesa"></i></span>
+                                <span class="mini-stat-icon bg-blue-grey mr-0 float-right"><i class="mdi mdi-black-mesa"></i></span>
                                 <div class="mini-stat-info">
                                     <span id="libros_registrados" class="counter text-blue-grey"></span>
                                     Libros registrados
@@ -43,10 +41,9 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-xl-6" id="registrar_autor" style="cursor: pointer;">
+                        <div class="col-md-6 col-xl-6" id="registrar_Libros" style="cursor: pointer;">
                             <div class="mini-stat clearfix bg-white">
- <span class="mini-stat-icon bg-teal mr-0 float-right"><i
-         class="mdi mdi-account"></i></span>
+                                <span class="mini-stat-icon bg-teal mr-0 float-right"><i class="mdi mdi-account"></i></span>
                                 <div class="mini-stat-info">
                                     <span class="counter text-teal">Registrar</span>
                                     Libro
@@ -71,7 +68,7 @@
     </div>
     <!-- End Right content here -->
 
-    <div class="modal fade" id="mdRegisAutor" tabindex="-1" role="dialog" arialabelledby="exampleModalLabel"
+    <div class="modal fade" id="mdRegisLibros" tabindex="-1" role="dialog" arialabelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -86,55 +83,78 @@
                 <div class="modal-body">
                     <form name="formulario_registro" id="formulario_registro">
                         <input type="hidden" id="consultar_datos" name="consultar_datos"
-                               value="insertarAutores">
+                               value="insertarLibros">
                         <div class="row">
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Código *</label>
-                                    <input type="text" autocomplete="off" name="codigoAutor"
-                                           data-parsley-error-message="Campo requerido" id="codigoAutor"
+                                    <input type="text" autocomplete="off" name="codigoLibro"
+                                           data-parsley-error-message="Campo requerido" id="codigoLibro"
                                            class="form-control"
-                                           required placeholder="Ingrese código del Autor"/>
+                                           required placeholder="Ingrese código del Libro"/>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Nombre *</label>
+                                    <label>Titulo del libro *</label>
                                     <input type="text" data-parsley-error-message="Campo requerido"
                                            autocomplete="off"
-                                           name="nombreAutor" id="nombreAutor" class="form-control"
+                                           name="tituloLibro" id="tituloLibro" class="form-control"
                                            required
-                                           placeholder="Ingrese nombre del Autor"/>
+                                           placeholder="Ingrese titulo del libro"/>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Apellido *</label>
-                                    <input type="text" autocomplete="off" name="apellidoAutor"
-                                           data-parsley-error-message="Campo requerido" id="apellidoAutor"
+                                    <label>Existencia de libros *</label>
+                                    <input type="number" data-parsley-error-message="Campo requerido"
+                                           autocomplete="off"
+                                           name="Existencia" id="Existencia" class="form-control"
+                                           required
+                                           placeholder="Cantidad a ingresar"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Categoria *</label>
+                                    <select class="form-control" id="codigoCategoria" name="codigoCategoria" required>
+                                        <option value="">Seleccione una opción</option>
+                                        <%
+                                            LibroDao lbcate = new LibroDao();
+                                            ResultSet objdao = lbcate.llenarSelectCategoria();
+                                            while (objdao.next()) {%>
+                                        <option value="<%=objdao.getString("codigoc") %>"><%=objdao.getString("nombrec")%></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Precio *</label>
+                                    <input type="text" autocomplete="off" name="Precio"
+                                           data-parsley-error-message="Campo requerido" id="Precio"
                                            class="form-control"
-                                           required placeholder="Ingrese apellido del Autor"/>
+                                            placeholder="Ingrese el precio del libro" required/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Fecha de Nacimiento *</label>
-                                    <input type="date" autocomplete="off" name="fechaNacimiento"
-                                           data-parsley-error-message="Campo requerido" id="fechaNacimiento"
-                                           class="form-control" required/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Nacionalidad *</label>
-                                    <select class="form-control" id="nacionalidadAutor" name="nacionalidadAutor" >
-                                        <option value="Seleccione" selected>Seleccione</option>
-                                        <option value="Nacional" >Nacional</option>
-                                        <option value="Extranjero" >Extranjero</option>
+                                    <label>Autor *</label>
+                                    <select class="form-control" id="codigoAutor" name="codigoAutor" required>
+                                        <option value="">Seleccione una opción</option>
+                                        <%
+                                            LibroDao lbdao = new LibroDao();
+                                            ResultSet obdao = lbdao.llenarSelectAutor();
+                                            while (obdao.next()) {%>
+                                        <option value="<%=obdao.getString("codigoa") %>"><%=obdao.getString("nombrecompletoa")%></option>
+                                        <% } %>
                                     </select>
                                 </div>
                             </div>
@@ -170,4 +190,6 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <%@page import="java.time.LocalDateTime" %>
     <%@ page import="java.time.temporal.ChronoField" %>
-    <script src="./modulos/libros/funciones_libros.js"></script>
+    <%@ page import="DAOs.LibroDao" %>
+    <%@ page import="java.sql.ResultSet" %>
+        <script src="./modulos/libros/funciones_libros.js"></script>

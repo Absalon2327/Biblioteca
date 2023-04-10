@@ -23,7 +23,8 @@ public class AutoresDao {
         java.sql.Date fechaNacimiento = new java.sql.Date(autor.getFechaNacimientoAutor().getTime());
         System.out.println("fechaNacimiento: " + fechaNacimiento);
         try {
-            String sql = "INSERT INTO tb_autor(codigoautor, nombreautor, apellidoautor, fechanacimientoautor, nacionalidad)values(?,?,?,?,?)";
+            //String sql = "INSERT INTO tb_autor(codigoautor, nombreautor, apellidoautor, fechanacimientoautor, nacionalidad)values(?,?,?,?,?)";
+            String sql= "exec insertarAutor ?, ?, ?, ?, ?";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, autor.getCodigoAutor());
             st.setString(2, autor.getNombreAutor());
@@ -73,8 +74,7 @@ public class AutoresDao {
 
         int resultadoModificar = 0;
         try {
-            String sql = "UPDATE tb_autor SET nombreautor = ?,apellidoautor = ?, fechanacimientoautor = ?," +
-                    "nacionalidad = ? WHERE codigoautor = '" + autor.getCodigoAutor() +"'";
+            String sql = "exec actualizartablaAutor  ?, ?, ?, ?,'" + autor.getCodigoAutor() +"'";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, autor.getNombreAutor());
             st.setString(2, autor.getApellidoAutor());
@@ -101,7 +101,7 @@ public class AutoresDao {
         int eliminado = 0;
         try {
             con.setAutoCommit(false);
-            String sql = "DELETE FROM tb_autor WHERE codigoautor = '" + autor.getCodigoAutor() +"'";
+            String sql = "exec eliminarAutor '" + autor.getCodigoAutor() +"'";
             System.out.println("codigo de la categoria: " + autor.getCodigoAutor());
             PreparedStatement st;
             st = con.prepareStatement(sql);

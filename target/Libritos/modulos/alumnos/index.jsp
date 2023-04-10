@@ -100,6 +100,7 @@
                             </div>
                         </div>
                         <div class="row">
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nombre *</label>
@@ -110,6 +111,7 @@
                                            placeholder="Ingrese nombre del Alumno"/>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Apellido *</label>

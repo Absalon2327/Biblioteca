@@ -1,6 +1,6 @@
 cargarDatos();
 $(function () {
-    var fecha = new Date();
+    //var fecha = new Date();
     console.log("esta funcionando");
 
 

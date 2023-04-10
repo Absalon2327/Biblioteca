@@ -1,6 +1,7 @@
+cargarDatos();
 $(function () {
     console.log("esta funcionando consulta");
-    cargarDatos();
+
     cargarSelect();
     $(document).on("change","#id_categoria",function (e) {
         cargarDatos($("#id_categoria").val());

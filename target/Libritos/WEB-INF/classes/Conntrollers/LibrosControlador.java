@@ -1,6 +1,9 @@
 package Conntrollers;
 
 import DAOs.LibroDao;
+import Models.Autor;
+import Models.CategoriaLibros;
+import Models.Libro;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,7 +14,9 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
 
 @WebServlet(name = "LibrosControlador", value = "/Libros")
@@ -33,6 +38,44 @@ public class LibrosControlador extends HttpServlet {
             return;
         }
         switch (filtro) {
+            case "insertarLibros":
+                JSONArray arrayInsertLibro = new JSONArray();
+                JSONObject jsonInsertlibro = new JSONObject();
+                String resultadoInsert = "";
+                Libro libro = new Libro();
+                try {
+                    LibroDao ld = new LibroDao();
+
+                    libro.setCodigoLibro(request.getParameter("codigoLibro"));
+                    libro.setTituloLibro(request.getParameter("tituloLibro"));
+                    libro.setExistencia(Integer.parseInt(request.getParameter("Existencia")));
+                    libro.setCodigoCategoria(new CategoriaLibros(request.getParameter("codigoCategoria")));
+                    libro.setPrecio(Double.parseDouble(request.getParameter("Precio")));
+                    libro.setCodigoAutor(new Autor(request.getParameter("codigoAutor")));
+                    resultadoInsert = ld.insertarLibro(libro);
+                    if(resultadoInsert=="exito"){
+                        jsonInsertlibro.put("resultado", "exito");
+                    }else {
+                        jsonInsertlibro.put("resultado", "error");
+                        jsonInsertlibro.put("resultadoInsertar", resultadoInsert);
+
+                    }
+
+                }catch (SQLException e){
+                    jsonInsertlibro.put("resultado", "error_sql");
+                    jsonInsertlibro.put("error_mostrado", e.getMessage());
+                    System.out.println("Error mostrado: " + e);
+                    System.out.println("Error Code error: " + e.getErrorCode());
+                    System.out.println("Error Exception: " + e);
+                    throw  new RuntimeException(e);
+                }catch (ClassNotFoundException e){
+                    jsonInsertlibro.put("resultado", "error_class");
+                    jsonInsertlibro.put("error_mostrado", e);
+                    throw new RuntimeException(e);
+                }
+                arrayInsertLibro.put(jsonInsertlibro);
+                response.getWriter().write(arrayInsertLibro.toString());
+                break;
             case "mostrarLibros":
                 int con = 0;
                 JSONArray arrayLibros = new JSONArray();

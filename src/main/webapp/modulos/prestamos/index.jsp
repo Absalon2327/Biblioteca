@@ -43,10 +43,9 @@
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-xl-6" id="registrar_autor" style="cursor: pointer;">
+                        <div class="col-md-6 col-xl-6" id="registrar_prestamos" style="cursor: pointer;">
                             <div class="mini-stat clearfix bg-white">
- <span class="mini-stat-icon bg-teal mr-0 float-right"><i
-         class="mdi mdi-account"></i></span>
+                                <span class="mini-stat-icon bg-teal mr-0 float-right"><i class="mdi mdi-account"></i></span>
                                 <div class="mini-stat-info">
                                     <span class="counter text-teal">Registrar</span>
                                     Prestamo
@@ -71,12 +70,12 @@
     </div>
     <!-- End Right content here -->
 
-    <div class="modal fade" id="mdRegisAutor" tabindex="-1" role="dialog" arialabelledby="exampleModalLabel"
+    <div class="modal fade" id="mdRegisPrestamo" tabindex="-1" role="dialog" arialabelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Nuevo | Autor<br>
+                    <h5 class="modal-title" id="exampleModalLabel">Nuevo | Prestamo<br>
                         <sub>Campos marcados con * son obligatorios</sub>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -86,43 +85,52 @@
                 <div class="modal-body">
                     <form name="formulario_registro" id="formulario_registro">
                         <input type="hidden" id="consultar_datos" name="consultar_datos"
-                               value="insertarAutores">
+                               value="insertarPrestamos">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Código *</label>
-                                    <input type="text" autocomplete="off" name="codigoAutor"
-                                           data-parsley-error-message="Campo requerido" id="codigoAutor"
+                                    <input type="text" autocomplete="off" name="codigoPrestamo"
+                                           data-parsley-error-message="Campo requerido" id="codigoPrestamo"
                                            class="form-control"
                                            required placeholder="Ingrese código del Autor"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Nombre *</label>
-                                    <input type="text" data-parsley-error-message="Campo requerido"
-                                           autocomplete="off"
-                                           name="nombreAutor" id="nombreAutor" class="form-control"
-                                           required
-                                           placeholder="Ingrese nombre del Autor"/>
+                                    <label class="">Libro *</label>
+                                    <select class="form-control" id="codigoLibro" name="codigoLibro" required>
+                                        <option value="">Seleccione una opción</option>
+                                        <%
+                                            PrestamosDao prestamo = new PrestamosDao();
+                                            ResultSet ob = prestamo.listaprestamoSelect();
+                                            while (ob.next()) {%>
+                                        <option value="<%=ob.getString("cod") %>"><%=ob.getString("titulo")%></option>
+                                        <% } %>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Apellido *</label>
-                                    <input type="text" autocomplete="off" name="apellidoAutor"
-                                           data-parsley-error-message="Campo requerido" id="apellidoAutor"
-                                           class="form-control"
-                                           required placeholder="Ingrese apellido del Autor"/>
+                                    <label class="">Alumno *</label>
+                                    <select class="form-control" id="carnetAlumno" name="carnetAlumno" required>
+                                        <option value="">Seleccione una opción</option>
+                                        <%
+                                            PrestamosDao prestamoA = new PrestamosDao();
+                                            ResultSet obj = prestamoA.listaprestamoSelectAlumno();
+                                            while (obj.next()) {%>
+                                        <option value="<%=obj.getString("carnett") %>"><%=obj.getString("nombrecompleto")%></option>
+                                        <% } %>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Fecha de Nacimiento *</label>
-                                    <input type="date" autocomplete="off" name="fechaNacimiento"
-                                           data-parsley-error-message="Campo requerido" id="fechaNacimiento"
+                                    <label>Cantidad a prestar *</label>
+                                    <input type="number" autocomplete="off" name="cantidadPrestamo"
+                                           data-parsley-error-message="Campo requerido" id="cantidadPrestamo"
                                            class="form-control" required/>
                                 </div>
                             </div>
@@ -130,17 +138,24 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Nacionalidad *</label>
-                                    <select class="form-control" id="nacionalidadAutor" name="nacionalidadAutor" >
-                                        <option value="Seleccione" selected>Seleccione</option>
-                                        <option value="Nacional" >Nacional</option>
-                                        <option value="Extranjero" >Extranjero</option>
-                                    </select>
+                                    <label>Fecha prestamo *</label>
+                                    <input type="Date" autocomplete="off" name="fechaPrestamo"
+                                           data-parsley-error-message="Campo requerido" id="fechaPrestamo"
+                                           class="form-control" required/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Fecha Devolucion *</label>
+                                    <input type="Date" autocomplete="off" name="fechaDevolucion"
+                                           data-parsley-error-message="Campo requerido" id="fechaDevolucion"
+                                           class="form-control" required/>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" datadismiss="modal">Cerrar</button>
+
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
@@ -166,7 +181,9 @@
     <script src="public/plugins/datatables/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript" src="public/plugins/parsleyjs/parsley.min.js"></script>
     <script src="public/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <%@page import="java.time.LocalDateTime" %>
-    <%@ page import="java.time.temporal.ChronoField" %>
-    <script src="./modulos/prestamos/funciones_prestamos.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
+        <%@page import="java.time.LocalDateTime" %>
+        <%@ page import="java.time.temporal.ChronoField" %><%@ page import="DAOs.PrestamosDao"%><%@ page import="java.sql.ResultSet"%><%@ page import="Models.Libro"%>
+    </script><script src="./modulos/prestamos/funciones_prestamos.js"></script>

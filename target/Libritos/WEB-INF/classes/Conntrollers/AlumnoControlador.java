@@ -35,6 +35,7 @@ public class AlumnoControlador extends HttpServlet {
             case "insertarAlumnos":
                 JSONArray arrayInsertAAlumno = new JSONArray();
                 JSONObject objInsertAlumno = new JSONObject();
+
                 String resultadoInsertar = "";
                 String estadoInsert = null;
                 String estadoVista = "Activo";
