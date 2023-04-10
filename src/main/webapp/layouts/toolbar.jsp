@@ -29,15 +29,13 @@
             <li class="list-inline-item dropdown notification-list">
                 <a style=" color: black !important; " class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
-                    <!--img src="<?php print $home?><?php print $_SESSION['imagen']?>" alt="user" class="rounded-circle"-->
                     <% HttpSession sesion = request.getSession(true); %>
                     <%=sesion.getAttribute("nombre") %> <span style=" padding-left: 10px; padding-right: 10px; "><i class="fa fa-angle-down"></i></span>
 
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                    <!-- <a class="dropdown-item" href="#"><i class="dripicons-user text-muted"></i> Perfil</a> -->
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="Ingreso"><i class="dripicons-exit text-muted"></i> Salir</a>
+                    <a class="dropdown-item" href="Rutas?modulos=login"><i class="dripicons-exit text-muted"></i> Salir</a>
                 </div>
             </li>
         </ul>

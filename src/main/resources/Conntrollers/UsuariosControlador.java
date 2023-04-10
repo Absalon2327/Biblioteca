@@ -27,6 +27,7 @@ public class UsuariosControlador extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json;charset=utf-8");
         String filtro = request.getParameter("consultar_datos");
         System.out.println(filtro);
 
@@ -124,6 +125,7 @@ public class UsuariosControlador extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json;charset=utf-8");
         String insertar = "";
         String modifcar = "";
         String contra = "";
@@ -255,6 +257,7 @@ public class UsuariosControlador extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json;charset=utf-8");
         String filtro = request.getParameter("consultar_datos");
         System.out.println(filtro);
         System.out.println("llego aquí");

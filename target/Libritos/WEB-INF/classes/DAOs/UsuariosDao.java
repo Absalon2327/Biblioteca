@@ -50,6 +50,24 @@ public class UsuariosDao {
         }
         return resultSet;
     }
+
+    public ResultSet obtenerCredenciales(String usuario){
+        ResultSet resultSet = null;
+        try {
+            Conexion cone = new Conexion();
+            con = cone.abrirConexion();
+            String sql = "";
+            sql = "EXEC obtenerCredenciales '" + usuario + "'";
+            System.out.println("El SQL estados: " + sql);
+            PreparedStatement ps = con.prepareStatement(sql);
+            resultSet = ps.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
     public String insertarUsuario(Usuario usuario) throws SQLException, ClassNotFoundException{
         Conexion cone = new Conexion();
         con = cone.abrirConexion();

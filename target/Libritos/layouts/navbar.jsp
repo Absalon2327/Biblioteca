@@ -6,7 +6,7 @@
 <div class="topbar-left">
     <div class="">
         <!--<a href="index.php" class="logo text-center">Admiria</a>-->
-        <a href="index.jsp" class="logo"><img src="public/assets/images/icon_libros.png" height="90" alt="logo"></a>
+        <a href="Rutas?modulos=prestamos" class="logo"><img src="public/assets/images/icon_libros.png" height="90" alt="logo"></a>
     </div>
 </div>
 

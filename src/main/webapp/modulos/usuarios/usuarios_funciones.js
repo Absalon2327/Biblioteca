@@ -298,7 +298,27 @@ function cargarDatos(){
         if (json[0].resultado == "exito"){
             console.log("Entra");
             $("#tbUsuarios").empty().html(json[0].tabla);
-            $("#tabla_usuarios").DataTable();
+            $("#tabla_usuarios").DataTable({"lengthMenu": [[5, 10, -1], [5, 10, "Todos"]],
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                responsive: true,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando la página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Sin registros",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar :",
+                    "paginate": {
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
             $("#usuarios_registrados").empty().html(json[0].cantidad);
         }else{
             Swal.fire(
@@ -309,9 +329,7 @@ function cargarDatos(){
         }
 
 
-    })
-        .fail(function () {})
-        .always(function () {
+    }).fail(function () {}).always(function () {
             Swal.close();
-        });
+    });
 }

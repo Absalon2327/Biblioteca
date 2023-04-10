@@ -26,6 +26,7 @@ public class Consulta5Controlador extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json;charset=utf-8");
         String filtro = request.getParameter("consultar_datos");
 
         if(filtro == null){
