@@ -45,9 +45,7 @@ public class AlumnosDao {
         java.sql.Date fechaIngreso = new java.sql.Date(alumno.getFechaIngreso().getTime());
         System.out.println("fechaNacimiento: " + fechaNacimiento);
         try {
-            //sql = "EXEC Insert_Alumno(?,?,?,?,?,?,?,?)"
-            String sql = "INSERT INTO tb_alumno(carnet, nombre, apellido, direccion, fechanacimiento, fechaingreso, genero, estado)" +
-                    "values(?,?,?,?,?,?,?,?)";
+            String sql = "exec insertarAlumno ?, ?, ?, ?, ?, ?, ?, ?";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, alumno.getCarnet());
             st.setString(2, alumno.getNombreAlumno());
@@ -102,8 +100,7 @@ public class AlumnosDao {
         int resultadoModificar = 0;
         try {
 
-            String sql = "UPDATE tb_alumno SET nombre = ?, apellido = ?, direccion = ?, fechanacimiento = ?," +
-                    "fechaingreso = ?, genero = ?, estado = ? WHERE carnet = '" + alumno.getCarnet() +"'";
+            String sql = "exec atualizartablaAlumno  ?, ?, ?, ?, ?, ?, ?, '" + alumno.getCarnet() +"'";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, alumno.getNombreAlumno());
             st.setString(2, alumno.getApellidoAlumno());
@@ -132,7 +129,7 @@ public class AlumnosDao {
         int eliminado = 0;
         try {
             con.setAutoCommit(false);
-            String sql = "DELETE FROM tb_alumno WHERE carnet = '" + alumno.getCarnet() +"'";
+            String sql = "exec eliminarAlumno  '" + alumno.getCarnet() +"'";
             System.out.println("codigo de la categoria: " + alumno.getCarnet());
             PreparedStatement st;
             st = con.prepareStatement(sql);

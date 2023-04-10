@@ -1,6 +1,10 @@
 package Conntrollers;
 
+import DAOs.Consulta5Dao;
 import DAOs.PrestamosDao;
+import Models.Alumno;
+import Models.Libro;
+import Models.Prestamo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -8,8 +12,15 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.ObjectInput;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 
 @WebServlet(name = "PrestamoControllador", value = "/Prestamos")
 public class PrestamoControlador extends HttpServlet{
@@ -27,6 +38,59 @@ public class PrestamoControlador extends HttpServlet{
             return;
         }
         switch (filtro) {
+
+            case "insertarPrestamos":
+                JSONArray arrayInsertPrestamo = new JSONArray();
+                JSONObject objInsertPrestamo = new JSONObject();
+                String resultadoInsertar="";
+
+                String fechaprestamo = request.getParameter("fechaPrestamo");
+                String fechadevolucion = request.getParameter("fechaDevolucion");
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                Date fechapres = null;
+                Date fechadevo = null;
+                try {
+                    fechapres= formato.parse(fechaprestamo);
+                    fechadevo= formato.parse(fechadevolucion);
+                }catch (ParseException e){
+                    throw new RuntimeException(e);
+                }
+                System.out.println("fechaprestamo: "+ fechaprestamo);
+                System.out.println("fechadevolucion: "+ fechadevolucion);
+                Prestamo prestamo = new Prestamo();
+
+                try {
+                    PrestamosDao pdao= new PrestamosDao();
+                    prestamo.setCodigoprestamo(request.getParameter("codigoPrestamo"));
+                    prestamo.setCodigolibro(new Libro(request.getParameter("codigoLibro")));
+                    prestamo.setCarnetalumno(new Alumno(request.getParameter("carnetAlumno")));
+                    prestamo.setCantidadprestamo(Integer.parseInt(request.getParameter("cantidadPrestamo")));
+                    prestamo.setFechaprestamo(fechapres);
+                    prestamo.setFechadevolucion(fechadevo);
+                    resultadoInsertar= pdao.insertarPrestamo(prestamo);
+                    if (resultadoInsertar == "exito"){
+                        objInsertPrestamo.put("resultado", "exito");
+                    }else{
+                        objInsertPrestamo.put("resultado", "error");
+                        objInsertPrestamo.put("resultadoInsertar", resultadoInsertar);
+                    }
+
+                }catch (SQLException e){
+                    objInsertPrestamo.put("resultado", "error_sql");
+                    objInsertPrestamo.put("error_mostrado", e.getMessage());
+                    System.out.println("Error mostrado: " + e);
+                    System.out.println("Error Code error: " + e.getErrorCode());
+                    System.out.println("Error Exception: " + e);
+                    throw  new RuntimeException(e);
+
+                }catch (ClassNotFoundException e){
+                    objInsertPrestamo.put("resultado", "error_class");
+                    objInsertPrestamo.put("error_mostrado", e);
+                    throw new RuntimeException(e);
+                }
+                arrayInsertPrestamo.put(objInsertPrestamo);
+                response.getWriter().write(arrayInsertPrestamo.toString());
+                break;
             case "mostrarPrestamos":
                 int con = 0;
                 JSONArray arrayPrestamos = new JSONArray();

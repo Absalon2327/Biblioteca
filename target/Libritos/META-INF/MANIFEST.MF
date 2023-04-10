@@ -1,5 +1,13 @@
+<<<<<<< Updated upstream
 Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
 Built-By: FABRICIO
 Build-Jdk: Oracle OpenJDK version 19.0.2
 
+=======
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: 50374
+Build-Jdk: Oracle OpenJDK version 19.0.2
+
+>>>>>>> Stashed changes

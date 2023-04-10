@@ -48,7 +48,14 @@
                 <a href="Rutas?modulos=consulta1" class="waves-effect"><i class="mdi mdi-file"></i><span>Consulta 1</span></a>
             </li>
             <li>
+<<<<<<< Updated upstream
                <a href="Rutas?modulos=consulta5" class="waves-effect"><i class="mdi mdi-file"></i><span>Consulta 5</span></a>
+=======
+                <a href="/Libritos/Consulta2" class="waves-effect"><i class="mdi mdi-file"></i><span> 2. Permisos por fecha </span></a>
+            </li>
+            <li>
+               <a href="/Libritos/Consulta5" class="waves-effect"><i class="mdi mdi-file"></i><span> 5. Lista de Libros por categoria </span></a>
+>>>>>>> Stashed changes
              </li>
         </ul>
     </div>

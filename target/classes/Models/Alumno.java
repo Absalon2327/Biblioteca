@@ -16,6 +16,10 @@ public class Alumno {
     public Alumno() {
     }
 
+    public Alumno(String carnet) {
+        this.carnet = carnet;
+    }
+
     public Alumno(String carnet, String nombreAlumno, String apellidoAlumno, String direccion, Date fechaNacimientoAlumno,
                   Date fechaIngreso, String genero, Boolean estado) {
         this.carnet = carnet;
