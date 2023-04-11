@@ -2,14 +2,7 @@ cargarDatos();
 $(function () {
     console.log("esta funcionando libros");
 
-    $(document).on("click", ".regis_libros", function (e){
-        e.preventDefault();
 
-        $("#formulario_registro").trigger("reset");
-        document.getElementById('codigoLibro').readOnly=false;
-        $("#exampleModalLabel").empty().html("Nuevo | Libro");
-        $("#mdRegisLib").modal("show");
-    });
 
     $(document).on('click', '#registrarLibro', function (e){
         e.preventDefault();
@@ -49,7 +42,7 @@ $(function () {
                 }).then((confirmacion)=>{
                     if (confirmacion){
                         $("#formulario_registro").trigger("reset");
-                        $("#mdRegisLibros").modal("hide");
+                        $("#mdRegistroLibros").modal("hide");
                         cargarDatos();
                     }else;
                 });
@@ -80,26 +73,16 @@ $(function () {
             .done(function (json) {
                 console.log("EL consultar especifico", json);
                 if (json[0].resultado == "exito") {
-                    console.log("el estado: ", json[0].estadoAl );
-                    let estado = "";
-                    if (json[0].estadoAl == "t"){
-                        estado = "Activo";
-                    }else{
-                        estado = "Inactivo";
-                    }
-                    document.getElementById('carnetAlumno').readOnly = true;
-                    $("#consultar_datos").val("modificarAlumno");
-                    $("#carnetAlumno").val(json[0].canetAl);
-                    $("#nombreAlumno").val(json[0].nombreAl);
-                    $("#apellidoAlumno").val(json[0].apellidoAl);
-                    $("#direccionAlumno").val(json[0].direcAl);
-                    $("#fechaNacimientoAlumno").val(json[0].fechaNaciAl);
-                    $("#fechaIngreso").val(json[0].fechaInAl);
-                    $("#generoAlumno").val(json[0].generoAl);
-                    $("#apellidoAutor").val(json[0].estadoAl);
-                    $("#estadoAlumno").val(estado);
-                    $("#exampleModalLabel").empty().html("Modificar | Alumno");
-                    $("#mdRegisAlumnos").modal("show");
+
+                    document.getElementById('codigoLibro').readOnly = true;
+                    $("#consultar_datos").val("modificarLibro");
+                    $("#codigoLibro").val(json[0].idLib);
+                    $("#tituloLibro").val(json[0].titulo);
+                    $("#Existencia").val(json[0].existencia);
+                    $("#codigoCategoria").val(json[0].categoria);
+                    $("#codigoAutor").val(json[0].autor);
+                    $("#exampleModalLabel").empty().html("Modificar | Autor");
+                    $("#mdRegistroLibros").modal("show");
                 }
             })
             .fail(function () {})

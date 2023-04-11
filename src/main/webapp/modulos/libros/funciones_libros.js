@@ -42,7 +42,7 @@ $(function () {
                 }).then((confirmacion)=>{
                     if (confirmacion){
                         $("#formulario_registro").trigger("reset");
-                        $("#mdRegisLibros").modal("hide");
+                        $("#mdRegistroLibros").modal("hide");
                         cargarDatos();
                     }else;
                 });
