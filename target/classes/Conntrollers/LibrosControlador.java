@@ -1,6 +1,7 @@
 package Conntrollers;
 
 import DAOs.LibroDao;
+import DAOs.UsuariosDao;
 import Models.Autor;
 import Models.CategoriaLibros;
 import Models.Libro;
@@ -23,6 +24,37 @@ import java.util.Locale;
 public class LibrosControlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json;charset=utf-8");
+
+        String idUsuario = request.getParameter("id");
+        JSONArray ArrayUsuarios = new JSONArray();
+        JSONObject objUsuarios = new JSONObject();
+
+        try {
+            UsuariosDao usuariosDao = new UsuariosDao();
+            ResultSet resultSetUsuarios = usuariosDao.consultarUsuariosID(idUsuario);
+            while (resultSetUsuarios.next()){
+                objUsuarios.put("resultado", "exito");
+                objUsuarios.put("idU", resultSetUsuarios.getString("id"));
+                objUsuarios.put("nombreU", resultSetUsuarios.getString("nombre"));
+                objUsuarios.put("apellidoU", resultSetUsuarios.getString("apellido"));
+                objUsuarios.put("usuario", resultSetUsuarios.getString("usuario"));
+                objUsuarios.put("nivel", resultSetUsuarios.getString("nivel"));
+                objUsuarios.put("estadoU", resultSetUsuarios.getString("estado"));
+            }
+        }catch (SQLException e){
+            objUsuarios.put("resultado", "error_sql");
+            objUsuarios.put("error", e.getMessage());
+            objUsuarios.put("code error", e.getErrorCode());
+            throw  new RuntimeException(e);
+        }catch (ClassNotFoundException e){
+            objUsuarios.put("resultado", "no se econtró la clase");
+            objUsuarios.put("error", e.getMessage());
+            throw new RuntimeException(e);
+        }
+        ArrayUsuarios.put(objUsuarios);
+        response.getWriter().write(ArrayUsuarios.toString());
+
 
 
     }

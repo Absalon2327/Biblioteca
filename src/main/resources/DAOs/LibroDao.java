@@ -34,6 +34,24 @@ public class LibroDao {
         return resultSet;
     }
 
+    public ResultSet traerLibro(String id){
+        ResultSet resultSet = null;
+        try {
+            Conexion cone = new Conexion();
+            con = cone.abrirConexion();
+            String sql = "";
+            sql = "EXEC traerLibro '"+ id +"'";
+            System.out.println("El SQL estados: " + sql);
+            PreparedStatement ps = con.prepareStatement(sql);
+            resultSet = ps.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
     public ResultSet llenarSelectCategoria(){
         ResultSet resultSet = null;
         try {
@@ -101,5 +119,34 @@ public class LibroDao {
         return resultado;
     }
     // TERMINA METODO PARA INSERTAR LIBROS   MDPJ
+
+    public String modificarLibro(Libro libro) throws SQLException, ClassNotFoundException{
+        Conexion cone= new Conexion();
+        con= cone.abrirConexion();
+        String resultado="";
+
+        int resultadoModificar=0;
+        try {
+            String sql = "exec actualizarLibro ?, ?, ?, ?, ?";
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, libro.getCodigoLibro());
+            st.setString(2, libro.getTituloLibro());
+            st.setInt(3, libro.getExistencia());
+            st.setString(4, libro.getCodigoCategoria().getCodigocategoria());
+            st.setString(6, libro.getCodigoAutor().getCodigoAutor());
+            resultadoModificar = st.executeUpdate();
+            if(resultadoModificar>0){
+                resultado="exito";
+            }else{
+                resultado="error modificando libros";
+            }
+        }catch (SQLException e){
+            resultado="error_exceptioon";
+            System.out.print("Error al modificar"+ e);
+            System.out.println("El codigo error al modificar"+ e.getErrorCode());
+            e.printStackTrace();
+        }
+        return resultado;
+    }
 
 }

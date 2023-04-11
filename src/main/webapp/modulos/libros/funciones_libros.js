@@ -1,119 +1,22 @@
 cargarDatos();
 $(function () {
     console.log("esta funcionando libros");
-<<<<<<< HEAD
-    cargarDatos();
 
-    $(document).on("click", ".btnModificar", function (e) {
+
+
+    $(document).on('click', '#registrarLibro', function (e){
         e.preventDefault();
-        var id = $(this).attr("data-idAlumno");
-        console.log("El id es: ", id);
-        var datos = { "consultar_datos": "si_consultar_info", "id": id };
-
-        $.ajax({
-            dataType: "json",
-            method: "POST",
-            url: "Alumnos",
-            data: datos,
-        })
-            .done(function (json) {
-                console.log("EL consultar especifico", json);
-                if (json[0].resultado == "exito") {
-                    console.log("el estado: ", json[0].estadoAl );
-                    let estado = "";
-                    if (json[0].estadoAl == "t"){
-                        estado = "Activo";
-                    }else{
-                        estado = "Inactivo";
-                    }
-                    document.getElementById('carnetAlumno').readOnly = true;
-                    $("#consultar_datos").val("modificarAlumno");
-                    $("#carnetAlumno").val(json[0].canetAl);
-                    $("#nombreAlumno").val(json[0].nombreAl);
-                    $("#apellidoAlumno").val(json[0].apellidoAl);
-                    $("#direccionAlumno").val(json[0].direcAl);
-                    $("#fechaNacimientoAlumno").val(json[0].fechaNaciAl);
-                    $("#fechaIngreso").val(json[0].fechaInAl);
-                    $("#generoAlumno").val(json[0].generoAl);
-                    $("#apellidoAutor").val(json[0].estadoAl);
-                    $("#estadoAlumno").val(estado);
-                    $("#exampleModalLabel").empty().html("Modificar | Alumno");
-                    $("#mdRegisAlumnos").modal("show");
-                }
-            })
-            .fail(function () {})
-            .always(function () {});
-    });
-
-    $(document).on("click", ".btnEliminar", function (e) {
-        Swal.fire({
-            icon: "warning",
-            title: "¿Esta seguro de Eliminar?",
-            text: "Si Elimina el Alumno ya no podrá usarlo",
-
-            showCancelButton: true,
-            confirmButtonColor: "#DC3545",
-            confirmButtonText: "Sí, eliminar",
-            cancelButtonText: "Cancelar",
-        }).then((resutl) => {
-            if (resutl.isConfirmed) {
-                e.preventDefault();
-                var id = $(this).attr("data-idAlumno");
-                console.log("El id es: ", id);
-                var datos = {  "consultar_datos": "eliminarAutor", "id": id };
-
-                $.ajax({
-                    dataType: "json",
-                    method: "POST",
-                    url: "Alumnos",
-                    data: datos,
-                })
-                    .done(function (json) {
-                        console.log("EL consultar especifico", json);
-                        if (json[0].resultado == "exito") {
-                            Swal.fire({
-                                icon: "success",
-                                title: "Alumnos",
-                                text: "Eliminado con éxtio!",
-                                allowOutsideClick: false,
-                                confirmButtonText: "Ok",
-                            }).then((confirmacion) => {
-                                if (confirmacion) {
-                                    cargarDatos();
-                                } else;
-                            });
-                        } else if (json[0].resultado == "error") {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Alumnos",
-                                allowOutsideClick: false,
-                                text: "Algo salió mal !",
-                            });
-                        }
-                    })
-                    .fail(function () {})
-                    .always(function () {});
-            } else if (resutl.isDenied) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Alumnos",
-                    allowOutsideClick: false,
-                    text: "Algo salió mal !",
-=======
-    $(document).on("click", "#registrar_Libros", function (e){
-        e.preventDefault();
-
         $("#formulario_registro").trigger("reset");
         document.getElementById('codigoLibro').readOnly=false;
-        $("#exampleModalLabel").empty().html("Nuevo | Autor");
-        $("#mdRegisLibros").modal("show");
-
+        $("#exampleModalLabel").empty().html("Nuevo | Libro");
+        $("#mdRegistroLibros").modal('show');
     });
     const codigo= document.getElementById('codigoLibro');
 
     codigo.addEventListener('keyup',(e)=>{
         e.target.value=e.target.value.toUpperCase();
-    })
+    });
+
 
 
     //formulario de Libro
@@ -149,16 +52,107 @@ $(function () {
                     title: "Libros",
                     allowOutsideClick: false,
                     text: "Algo salio mal!",
->>>>>>> main
+
                 });
             }
         });
     });
-<<<<<<< HEAD
+
+    $(document).on("click", ".btnModificar", function (e) {
+        e.preventDefault();
+        var id = $(this).attr("data-idLibro");
+        console.log("El id es: ", id);
+        var datos = { "consultar_datos": "si_consultar_info", "id": id };
+
+        $.ajax({
+            dataType: "json",
+            method: "GET",
+            url: "Libros",
+            data: datos,
+        })
+            .done(function (json) {
+                console.log("EL consultar especifico", json);
+                if (json[0].resultado == "exito") {
+
+                    document.getElementById('codigoLibro').readOnly = true;
+                    $("#consultar_datos").val("modificarLibro");
+                    $("#codigoLibro").val(json[0].idLib);
+                    $("#tituloLibro").val(json[0].titulo);
+                    $("#Existencia").val(json[0].existencia);
+                    $("#codigoCategoria").val(json[0].categoria);
+                    $("#codigoAutor").val(json[0].autor);
+                    $("#exampleModalLabel").empty().html("Modificar | Autor");
+                    $("#mdRegistroLibros").modal("show");
+                }
+            })
+            .fail(function () {})
+            .always(function () {});
+    });
+
+    $(document).on("click", ".btnEliminar", function (e) {
+        Swal.fire({
+            icon: "warning",
+            title: "¿Esta seguro de Eliminar?",
+            text: "Si Elimina el Alumno ya no podrá usarlo",
+
+            showCancelButton: true,
+            confirmButtonColor: "#DC3545",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+        }).then((resutl) => {
+            if (resutl.isConfirmed) {
+                e.preventDefault();
+                var id = $(this).attr("data-idAlumno");
+                console.log("El id es: ", id);
+                var datos = {"consultar_datos": "eliminarAutor", "id": id};
+
+                $.ajax({
+                    dataType: "json",
+                    method: "POST",
+                    url: "Alumnos",
+                    data: datos,
+                })
+                    .done(function (json) {
+                        console.log("EL consultar especifico", json);
+                        if (json[0].resultado == "exito") {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Alumnos",
+                                text: "Eliminado con éxtio!",
+                                allowOutsideClick: false,
+                                confirmButtonText: "Ok",
+                            }).then((confirmacion) => {
+                                if (confirmacion) {
+                                    cargarDatos();
+                                } else ;
+                            });
+                        } else if (json[0].resultado == "error") {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Alumnos",
+                                allowOutsideClick: false,
+                                text: "Algo salió mal !",
+                            });
+                        }
+                    })
+                    .fail(function () {
+                    })
+                    .always(function () {
+                    });
+            } else if (resutl.isDenied) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Alumnos",
+                    allowOutsideClick: false,
+                    text: "Algo salió mal !",
+                });
+            }
+        });
+    });
 });
-=======
-})
->>>>>>> main
+
+
+
 
 function cargarDatos() {
     var datos = {"consultar_datos": "mostrarLibros"}

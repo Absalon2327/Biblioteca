@@ -34,6 +34,24 @@ public class LibroDao {
         return resultSet;
     }
 
+    public ResultSet traerLirbo(){
+        ResultSet resultSet = null;
+        try {
+            Conexion cone = new Conexion();
+            con = cone.abrirConexion();
+            String sql = "";
+            sql = "SELECT * FROM vistalibros";
+            System.out.println("El SQL estados: " + sql);
+            PreparedStatement ps = con.prepareStatement(sql);
+            resultSet = ps.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
     public ResultSet llenarSelectCategoria(){
         ResultSet resultSet = null;
         try {

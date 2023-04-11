@@ -1,9 +1,11 @@
 package Conntrollers;
 
 import DAOs.LibroDao;
+import DAOs.UsuariosDao;
 import Models.Autor;
 import Models.CategoriaLibros;
 import Models.Libro;
+import Models.Usuario;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,6 +25,35 @@ import java.util.Locale;
 public class LibrosControlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json;charset=utf-8");
+
+        String id = request.getParameter("id");
+        JSONArray ArrayLibros = new JSONArray();
+        JSONObject objLibros = new JSONObject();
+        try {
+            LibroDao libroDao = new LibroDao();
+            ResultSet resultSet = libroDao.traerLibro(id);
+            while (resultSet.next()){
+                objLibros.put("resultado", "exito");
+                objLibros.put("idLib", resultSet.getString("codigo"));
+                objLibros.put("titulo", resultSet.getString("titulo"));
+                objLibros.put("existencia", resultSet.getString("existencia"));
+                objLibros.put("categoria", resultSet.getString("categoria"));
+                objLibros.put("autor", resultSet.getString("autor"));
+            }
+        }catch (SQLException e){
+            objLibros.put("resultado", "error_sql_libros");
+            objLibros.put("error", e.getMessage());
+            objLibros.put("code error", e.getErrorCode());
+            throw  new RuntimeException(e);
+        }catch (ClassNotFoundException e){
+            objLibros.put("resultado", "no se econtró la clase");
+            objLibros.put("error", e.getMessage());
+            throw new RuntimeException(e);
+        }
+        ArrayLibros.put(objLibros);
+        response.getWriter().write(ArrayLibros.toString());
+
 
 
     }
@@ -76,6 +107,42 @@ public class LibrosControlador extends HttpServlet {
                 }
                 arrayInsertLibro.put(jsonInsertlibro);
                 response.getWriter().write(arrayInsertLibro.toString());
+                break;
+            case "modificarLibro":
+                JSONArray ArrayModify = new JSONArray();
+                JSONObject objModify = new JSONObject();
+                String resultadoModicado = "";
+                Libro lirboModify = new Libro();
+                Autor autor = new Autor();
+                CategoriaLibros categoriaLibros = new CategoriaLibros();
+                try {
+                    LibroDao libroDao = new LibroDao();
+                    categoriaLibros.setCodigocategoria(request.getParameter("codigoCategoria"));
+                    autor.setCodigoAutor(request.getParameter("codigoAutor"));
+                    lirboModify.setCodigoLibro(request.getParameter("codigoLibro"));
+                    lirboModify.setTituloLibro(request.getParameter("tituloLibro"));
+                    lirboModify.setExistencia(Integer.parseInt(request.getParameter("Existencia")));
+                    lirboModify.setCodigoCategoria(categoriaLibros);
+                    lirboModify.setCodigoAutor(autor);
+                    resultadoModicado = libroDao.modificarLibro(lirboModify);
+                    if (resultadoModicado == "exito"){
+                        objModify.put("resultado", "exito");
+                    }else {
+                        objModify.put("resultado", "error");
+                        objModify.put("resultado_nodificar", resultadoModicado);
+                    }
+                }catch (SQLException e){
+                    objModify.put("resultado", "error_sql");
+                    objModify.put("resultado", e.getMessage());
+                    objModify.put("error_code", e.getErrorCode());
+                    throw new RuntimeException(e);
+                }catch (ClassNotFoundException e){
+                    objModify.put("resultado", "no existe la clase");
+                    objModify.put("error_mostrado", e);
+                    throw new RuntimeException(e);
+                }
+                ArrayModify.put(objModify);
+                response.getWriter().write(ArrayModify.toString());
                 break;
             case "mostrarLibros":
                 int con = 0;
@@ -146,5 +213,13 @@ public class LibrosControlador extends HttpServlet {
                 response.getWriter().write(arrayLibros.toString());
                 break;
         }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        response.setContentType("application/json;charset=utf-8");
+        System.out.println("entró al editar");
+
     }
 }
