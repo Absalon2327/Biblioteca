@@ -51,6 +51,12 @@
                 <a href="Rutas?modulos=consulta2" class="waves-effect"><i class="mdi mdi-file"></i><span>Consulta 2 </span></a>
             </li>
             <li>
+                <a href="Rutas?modulos=consulta3" class="waves-effect"><i class="mdi mdi-file"></i><span>Consulta 3 </span></a>
+            </li>
+            <li>
+                <a href="Rutas?modulos=consulta4" class="waves-effect"><i class="mdi mdi-file"></i><span>Consulta 4 </span></a>
+            </li>
+            <li>
                <a href="Rutas?modulos=consulta5" class="waves-effect"><i class="mdi mdi-file"></i><span>Consulta 5</span></a>
             </li>
         </ul>

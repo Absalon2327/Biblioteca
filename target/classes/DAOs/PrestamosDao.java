@@ -1,6 +1,7 @@
 package DAOs;
 
 import Models.Conexion;
+import Models.Libro;
 import Models.Prestamo;
 
 import java.sql.Connection;
@@ -71,8 +72,6 @@ public class PrestamosDao {
         return resultSet;
     }
 
-
-
     public String insertarPrestamo(Prestamo prestamo) throws SQLException, ClassNotFoundException{
         Conexion cone = new Conexion();
         con= cone.abrirConexion();
@@ -103,6 +102,76 @@ public class PrestamosDao {
             System.out.println("El codigo da error al insertar"+ e.getErrorCode());
             e.printStackTrace();
 
+        }
+        return resultado;
+    }
+
+    public ResultSet traerPrestamo(String id){
+        ResultSet resultSet = null;
+        try {
+            Conexion cone = new Conexion();
+            con = cone.abrirConexion();
+            String sql = "";
+            sql = "EXEC traerPrestamo '"+ id +"'";
+            System.out.println("El SQL estados: " + sql);
+            PreparedStatement ps = con.prepareStatement(sql);
+            resultSet = ps.executeQuery();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+    public String modificarPrestamo(Prestamo prestamo) throws SQLException, ClassNotFoundException{
+        Conexion cone= new Conexion();
+        con= cone.abrirConexion();
+        String resultado="";
+
+        int resultadoModificar=0;
+        try {
+            java.sql.Date fechaPrestamo = new java.sql.Date(prestamo.getFechaprestamo().getTime());
+            java.sql.Date fechaDevolucion = new java.sql.Date(prestamo.getFechadevolucion().getTime());
+            String sql = "exec actualizartablaPrestamoalumno ?, ?, ?, ?, ?, ?";
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, prestamo.getCarnetalumno().getCarnet());
+            st.setString(2, prestamo.getCodigolibro().getCodigoLibro());
+            st.setDate(3, fechaPrestamo);
+            st.setInt(4, prestamo.getCantidadprestamo());
+            st.setDate(5, fechaDevolucion);
+            st.setString(6, prestamo.getCodigoprestamo());
+            resultadoModificar = st.executeUpdate();
+            if(resultadoModificar>0){
+                resultado="exito";
+            }else{
+                resultado="error modificando libros";
+            }
+        }catch (SQLException e){
+            resultado="error_exceptioon";
+            System.out.print("Error al modificar "+ e);
+            System.out.println("El codigo error al modificar"+ e.getErrorCode());
+            e.printStackTrace();
+        }
+        return resultado;
+    }
+
+    public String eliminarPrestamo(String id) throws SQLException, ClassNotFoundException{
+
+        String resultado = "";
+        int eliminado = 0;
+        try {
+            con.setAutoCommit(false);
+            String sql = "EXEC eliminarPrestamoalumno '" + id +"'";
+            PreparedStatement st;
+            st = con.prepareStatement(sql);
+            st.executeUpdate();
+            resultado = "exito";
+            con.commit();
+        }catch (SQLException e){
+            resultado = "error_exception";
+            System.out.println("Error al Eliminar el libro: " + e);
+            System.out.println("El código error al Eliminar: " + e.getErrorCode());
+            e.printStackTrace();
         }
         return resultado;
     }

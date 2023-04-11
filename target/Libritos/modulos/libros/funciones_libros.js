@@ -80,6 +80,7 @@ $(function () {
                     $("#tituloLibro").val(json[0].titulo);
                     $("#Existencia").val(json[0].existencia);
                     $("#codigoCategoria").val(json[0].categoria);
+                    $("#Precio").val(json[0].precio);
                     $("#codigoAutor").val(json[0].autor);
                     $("#exampleModalLabel").empty().html("Modificar | Autor");
                     $("#mdRegistroLibros").modal("show");
@@ -93,8 +94,7 @@ $(function () {
         Swal.fire({
             icon: "warning",
             title: "¿Esta seguro de Eliminar?",
-            text: "Si Elimina el Alumno ya no podrá usarlo",
-
+            text: "Si Elimina el Libro ya no podrá usarlo",
             showCancelButton: true,
             confirmButtonColor: "#DC3545",
             confirmButtonText: "Sí, eliminar",
@@ -102,14 +102,14 @@ $(function () {
         }).then((resutl) => {
             if (resutl.isConfirmed) {
                 e.preventDefault();
-                var id = $(this).attr("data-idAlumno");
+                var id = $(this).attr("data-idLibro");
                 console.log("El id es: ", id);
-                var datos = {"consultar_datos": "eliminarAutor", "id": id};
+                var datos = {"id": id};
 
                 $.ajax({
                     dataType: "json",
-                    method: "POST",
-                    url: "Alumnos",
+                    method: "DELETE",
+                    url: "Libros",
                     data: datos,
                 })
                     .done(function (json) {
@@ -117,7 +117,7 @@ $(function () {
                         if (json[0].resultado == "exito") {
                             Swal.fire({
                                 icon: "success",
-                                title: "Alumnos",
+                                title: "Libros",
                                 text: "Eliminado con éxtio!",
                                 allowOutsideClick: false,
                                 confirmButtonText: "Ok",
@@ -129,7 +129,7 @@ $(function () {
                         } else if (json[0].resultado == "error") {
                             Swal.fire({
                                 icon: "error",
-                                title: "Alumnos",
+                                title: "Libros",
                                 allowOutsideClick: false,
                                 text: "Algo salió mal !",
                             });
@@ -142,7 +142,7 @@ $(function () {
             } else if (resutl.isDenied) {
                 Swal.fire({
                     icon: "error",
-                    title: "Alumnos",
+                    title: "Libros",
                     allowOutsideClick: false,
                     text: "Algo salió mal !",
                 });

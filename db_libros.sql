@@ -12,7 +12,7 @@
  Target Server Version : 15002000
  File Encoding         : 65001
 
- Date: 10/04/2023 15:40:21
+ Date: 11/04/2023 01:10:23
 */
 
 
@@ -78,6 +78,12 @@ GO
 INSERT INTO [dbo].[tb_autor] ([codigoautor], [nombreautor], [apellidoautor], [fechanacimientoautor], [nacionalidad]) VALUES (N'2', N'Cristian', N'Mejía', N'1986-09-27', N'Nacional')
 GO
 
+INSERT INTO [dbo].[tb_autor] ([codigoautor], [nombreautor], [apellidoautor], [fechanacimientoautor], [nacionalidad]) VALUES (N'3', N'Josue', N'Cortez', N'2000-02-10', N'Nacional')
+GO
+
+INSERT INTO [dbo].[tb_autor] ([codigoautor], [nombreautor], [apellidoautor], [fechanacimientoautor], [nacionalidad]) VALUES (N'4', N'Daniel', N'Carmona', N'1976-06-08', N'Extranjero')
+GO
+
 
 -- ----------------------------
 -- Table structure for tb_categoria
@@ -124,7 +130,7 @@ CREATE TABLE [dbo].[tb_libro] (
   [titulolibro] nvarchar(100) COLLATE Modern_Spanish_CI_AS  NOT NULL,
   [existencia] int  NOT NULL,
   [codigocategoria] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NOT NULL,
-  [precio] decimal(14,2)  NOT NULL,
+  [precio] decimal(14,2)  NULL,
   [codigoautor] nvarchar(5) COLLATE Modern_Spanish_CI_AS  NULL
 )
 GO
@@ -136,19 +142,16 @@ GO
 -- ----------------------------
 -- Records of tb_libro
 -- ----------------------------
-INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'12345', N'Don Quijote de la Mancha', N'25', N'1', N'.25', N'1')
+INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'12345', N'Don Quijote de la Manchita', N'20', N'2', N'40.00', N'2')
 GO
 
-INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'35214', N'Harry Potter', N'14', N'3', N'2.00', N'2')
+INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'35214', N'Harry Potter', N'14', N'3', N'60.00', N'2')
 GO
 
-INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'75123', N'Pepito', N'96', N'4', N'.60', N'1')
+INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'78546', N'Alicia en el país de las maravillas', N'47', N'2', N'100.00', N'2')
 GO
 
-INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'78546', N'Alicia en el país de las maravillas', N'47', N'2', N'.47', N'2')
-GO
-
-INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'95123', N'Mago de Oz', N'31', N'1', N'.95', N'1')
+INSERT INTO [dbo].[tb_libro] ([codigolibro], [titulolibro], [existencia], [codigocategoria], [precio], [codigoautor]) VALUES (N'95123', N'Mago de Oz', N'31', N'1', N'85.00', N'1')
 GO
 
 
@@ -176,7 +179,19 @@ GO
 -- ----------------------------
 -- Records of tb_prestamo_alumno
 -- ----------------------------
-INSERT INTO [dbo].[tb_prestamo_alumno] ([carnet_alumno], [codigo_libro], [fche_prestamo], [codigo_prestamo], [cantidadprestamo], [fecha_devolucion]) VALUES (N'CM16057', N'35214', N'2022-04-01', N'1', N'5', N'2022-04-05')
+INSERT INTO [dbo].[tb_prestamo_alumno] ([carnet_alumno], [codigo_libro], [fche_prestamo], [codigo_prestamo], [cantidadprestamo], [fecha_devolucion]) VALUES (N'FC16056', N'12345', N'2022-04-02', N'1', N'7', N'2022-04-06')
+GO
+
+INSERT INTO [dbo].[tb_prestamo_alumno] ([carnet_alumno], [codigo_libro], [fche_prestamo], [codigo_prestamo], [cantidadprestamo], [fecha_devolucion]) VALUES (N'CM16057', N'35214', N'2023-04-10', N'2', N'2', N'2023-04-14')
+GO
+
+INSERT INTO [dbo].[tb_prestamo_alumno] ([carnet_alumno], [codigo_libro], [fche_prestamo], [codigo_prestamo], [cantidadprestamo], [fecha_devolucion]) VALUES (N'FC16056', N'78546', N'2023-04-10', N'3', N'1', N'2023-04-11')
+GO
+
+INSERT INTO [dbo].[tb_prestamo_alumno] ([carnet_alumno], [codigo_libro], [fche_prestamo], [codigo_prestamo], [cantidadprestamo], [fecha_devolucion]) VALUES (N'FC16056', N'35214', N'2023-04-10', N'4', N'3', N'2023-04-13')
+GO
+
+INSERT INTO [dbo].[tb_prestamo_alumno] ([carnet_alumno], [codigo_libro], [fche_prestamo], [codigo_prestamo], [cantidadprestamo], [fecha_devolucion]) VALUES (N'CM16057', N'95123', N'2023-04-10', N'5', N'1', N'2023-04-12')
 GO
 
 
@@ -230,6 +245,28 @@ GO
 
 
 -- ----------------------------
+-- View structure for llenarcomboAutor
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[llenarcomboAutor]') AND type IN ('V'))
+	DROP VIEW [dbo].[llenarcomboAutor]
+GO
+
+CREATE VIEW [dbo].[llenarcomboAutor] AS select a.codigoautor as codigoa, concat(a.nombreautor, ' ', a.apellidoautor ) as nombrecompletoa  from tb_autor a
+GO
+
+
+-- ----------------------------
+-- View structure for llenarcomboCategoria
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[llenarcomboCategoria]') AND type IN ('V'))
+	DROP VIEW [dbo].[llenarcomboCategoria]
+GO
+
+CREATE VIEW [dbo].[llenarcomboCategoria] AS select c.codigocategoria as codigoc, c.nombrecategoria as nombrec from tb_categoria c
+GO
+
+
+-- ----------------------------
 -- View structure for llenarcomboLibro
 -- ----------------------------
 IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[llenarcomboLibro]') AND type IN ('V'))
@@ -251,6 +288,45 @@ CREATE VIEW [dbo].[vistaconsulta1] AS SELECT carnet, nombre, apellido, DATEDIFF(
 DATEDIFF(day, fechanacimiento, GETDATE()) / 365.25 AS edad_exacta, 
 CAST(DATEDIFF(day, fechanacimiento, GETDATE()) / 365.25 as int) AS edad_real 
 from db_libros.dbo.tb_alumno
+GO
+
+
+-- ----------------------------
+-- View structure for vistaConsulta3
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[vistaConsulta3]') AND type IN ('V'))
+	DROP VIEW [dbo].[vistaConsulta3]
+GO
+
+CREATE VIEW [dbo].[vistaConsulta3] AS SELECT
+	nombreautor,
+	apellidoautor,
+	nacionalidad,
+	fechanacimientoautor
+FROM
+	tb_autor A
+	FULL OUTER JOIN tb_libro B ON A.codigoautor = B.codigoautor 
+WHERE
+	B.codigoautor IS NULL
+GO
+
+
+-- ----------------------------
+-- View structure for vistaConsulta4
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[vistaConsulta4]') AND type IN ('V'))
+	DROP VIEW [dbo].[vistaConsulta4]
+GO
+
+CREATE VIEW [dbo].[vistaConsulta4] AS SELECT
+	tb_categoria.nombrecategoria,
+	tb_libro.titulolibro,
+	tb_libro.precio 
+FROM
+	dbo.tb_libro
+	INNER JOIN dbo.tb_categoria ON tb_libro.codigocategoria = tb_categoria.codigocategoria 
+WHERE
+	( precio BETWEEN 50 AND 100 )
 GO
 
 
@@ -546,36 +622,6 @@ BEGIN
 UPDATE tb_categoria set
 nombrecategoria=@nombrecategoria
 where codigocategoria=@codigocategoria
-END
-GO
-
-
--- ----------------------------
--- procedure structure for actualizartablaLibro
--- ----------------------------
-IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[actualizartablaLibro]') AND type IN ('FN', 'FS', 'FT', 'IF', 'TF'))
-	DROP PROCEDURE[dbo].[actualizartablaLibro]
-GO
-
-CREATE PROCEDURE [dbo].[actualizartablaLibro]
-	-- Add the parameters for the stored procedure here
-	@titulolibro nvarchar(100),
-	@existencia int,
-	@codigocategoria nvarchar(5),
-	@precio decimal(14,2),
-	@codigoautor nvarchar(5),
-	@codigolibro nvarchar(5)
-AS
-BEGIN
-
-UPDATE tb_libro set
-titulolibro=@titulolibro,
-existencia=@existencia,
-codigocategoria=@codigocategoria,
-precio=@precio,
-codigoautor=@codigoautor
-where codigolibro=@codigolibro
-
 END
 GO
 
@@ -881,6 +927,85 @@ CREATE PROCEDURE [dbo].[eliminarPrestamoalumno]
 AS
 BEGIN
 DELETE FROM tb_prestamo_alumno where codigo_prestamo=@codigoprestamo
+
+END
+GO
+
+
+-- ----------------------------
+-- procedure structure for traerPrestamo
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[traerPrestamo]') AND type IN ('FN', 'FS', 'FT', 'IF', 'TF'))
+	DROP PROCEDURE[dbo].[traerPrestamo]
+GO
+
+CREATE PROCEDURE [dbo].[traerPrestamo] @codigo VARCHAR ( 50 ) AS BEGIN
+	SELECT
+		carnet_alumno AS alumno,
+		codigo_libro AS idLibro,
+		fche_prestamo AS fechaPrestamo,
+		codigo_prestamo AS idPrestamo,
+		cantidadprestamo AS cantidad,
+		fecha_devolucion AS fechaDevolucion 
+	FROM
+		tb_prestamo_alumno 
+	WHERE
+		codigo_prestamo = @codigo;
+
+END
+GO
+
+
+-- ----------------------------
+-- procedure structure for traerLibro
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[traerLibro]') AND type IN ('FN', 'FS', 'FT', 'IF', 'TF'))
+	DROP PROCEDURE[dbo].[traerLibro]
+GO
+
+CREATE PROCEDURE [dbo].[traerLibro] @codigo VARCHAR ( 50 ) AS BEGIN
+	SELECT
+		codigolibro AS codigo,
+		titulolibro AS titulo,
+		existencia AS existencia,
+		codigocategoria AS categoria,
+		precio AS precio,
+		codigoautor AS autor 
+	FROM
+		tb_libro 
+	WHERE
+		codigolibro = @codigo;
+
+END
+GO
+
+
+-- ----------------------------
+-- procedure structure for actualizarLibro
+-- ----------------------------
+IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[actualizarLibro]') AND type IN ('FN', 'FS', 'FT', 'IF', 'TF'))
+	DROP PROCEDURE[dbo].[actualizarLibro]
+GO
+
+CREATE PROCEDURE [dbo].[actualizarLibro]
+	-- Add the parameters for the stored procedure here
+  @codigolibro varchar(5),
+	@titulolibro varchar(100),
+	@existencia int,
+	@codigocategoria varchar(5),
+	@precio decimal(14,2),
+	@codigoautor varchar(5)
+	
+AS
+BEGIN
+
+UPDATE tb_libro set
+titulolibro=@titulolibro,
+existencia=@existencia,
+codigocategoria=@codigocategoria,
+precio=@precio,
+codigoautor=@codigoautor
+where codigolibro=@codigolibro
 
 END
 GO

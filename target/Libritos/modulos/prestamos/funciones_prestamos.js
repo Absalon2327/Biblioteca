@@ -9,6 +9,7 @@ $(function () {
         $("#formulario_registro").trigger("reset");
         document.getElementById('codigoPrestamo').readOnly=false;
         $("#exampleModalLabel").empty().html("Nuevo | Prestamo");
+        $("#consultar_datos").val("insertarPrestamos");
         $("#mdRegisPrestamo").modal("show");
     });
 
@@ -32,6 +33,7 @@ $(function () {
         }).done(function (json){
             console.log("EL GUARDAR", json);
             if(json[0].resultado=="exito"){
+
                 Swal.fire({
                     icon: "success",
                     title: "Prestamos",
@@ -51,6 +53,97 @@ $(function () {
                     title: "Prestamos",
                     allowOutsideClick: false,
                     text: "Algo salio mal",
+                });
+            }
+        });
+    });
+
+    $(document).on("click", ".btnModificar", function (e) {
+        e.preventDefault();
+        var id = $(this).attr("data-idPrestamo");
+        console.log("El id es: ", id);
+        var datos = { "id": id };
+
+        $.ajax({
+            dataType: "json",
+            method: "GET",
+            url: "Prestamos",
+            data: datos,
+        })
+            .done(function (json) {
+                console.log("EL consultar especifico", json);
+                if (json[0].resultado == "exito") {
+
+                    document.getElementById('codigoPrestamo').readOnly = true;
+                    $("#consultar_datos").val("modificarPrestamo");
+                    $("#codigoPrestamo").val(json[0].codigo);
+                    $("#codigoLibro").val(json[0].libro);
+                    $("#carnetAlumno").val(json[0].alumno);
+                    $("#cantidadPrestamo").val(json[0].cantidad);
+                    $("#fechaPrestamo").val(json[0].fechaPrestamo);
+                    $("#fechaDevolucion").val(json[0].fechaDevo);
+                    $("#exampleModalLabel").empty().html("Modificar | Prestamo");
+                    $("#mdRegisPrestamo").modal("show");
+                }
+            })
+            .fail(function () {})
+            .always(function () {});
+    });
+
+    $(document).on("click", ".btnEliminar", function (e) {
+        Swal.fire({
+            icon: "warning",
+            title: "¿Esta seguro de Eliminar?",
+            text: "Si Elimina el prestamo ya no podrá usarlo",
+
+            showCancelButton: true,
+            confirmButtonColor: "#DC3545",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+        }).then((resutl) => {
+            if (resutl.isConfirmed) {
+                e.preventDefault();
+                var id = $(this).attr("data-idPrestamo");
+                console.log("El id es: ", id);
+                var datos = {  "id": id };
+
+                $.ajax({
+                    dataType: "json",
+                    method: "DELETE",
+                    url: "Prestamos",
+                    data: datos,
+                })
+                    .done(function (json) {
+                        console.log("EL consultar especifico", json);
+                        if (json[0].resultado == "exito") {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Prestamos",
+                                text: "Eliminado con éxtio!",
+                                allowOutsideClick: false,
+                                confirmButtonText: "Ok",
+                            }).then((confirmacion) => {
+                                if (confirmacion) {
+                                    cargarDatos();
+                                } else;
+                            });
+                        } else if (json[0].resultado == "error") {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Prestamos",
+                                allowOutsideClick: false,
+                                text: "Algo salió mal !",
+                            });
+                        }
+                    })
+                    .fail(function () {})
+                    .always(function () {});
+            } else if (resutl.isDenied) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Prestamos",
+                    allowOutsideClick: false,
+                    text: "Algo salió mal !",
                 });
             }
         });

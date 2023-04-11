@@ -2,6 +2,7 @@ package DAOs;
 
 import Models.Conexion;
 import Models.Libro;
+import Models.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -127,12 +128,13 @@ public class LibroDao {
 
         int resultadoModificar=0;
         try {
-            String sql = "exec actualizarLibro ?, ?, ?, ?, ?";
+            String sql = "exec actualizarLibro ?, ?, ?, ?, ?, ?";
             PreparedStatement st = con.prepareStatement(sql);
             st.setString(1, libro.getCodigoLibro());
             st.setString(2, libro.getTituloLibro());
             st.setInt(3, libro.getExistencia());
             st.setString(4, libro.getCodigoCategoria().getCodigocategoria());
+            st.setDouble(5, libro.getPrecio());
             st.setString(6, libro.getCodigoAutor().getCodigoAutor());
             resultadoModificar = st.executeUpdate();
             if(resultadoModificar>0){
@@ -142,8 +144,29 @@ public class LibroDao {
             }
         }catch (SQLException e){
             resultado="error_exceptioon";
-            System.out.print("Error al modificar"+ e);
+            System.out.print("Error al modificar "+ e);
             System.out.println("El codigo error al modificar"+ e.getErrorCode());
+            e.printStackTrace();
+        }
+        return resultado;
+    }
+
+    public String eliminarLibro(String id) throws SQLException, ClassNotFoundException{
+
+        String resultado = "";
+        int eliminado = 0;
+        try {
+            con.setAutoCommit(false);
+            String sql = "EXEC eliminarLibro '" + id +"'";
+            PreparedStatement st;
+            st = con.prepareStatement(sql);
+            st.executeUpdate();
+            resultado = "exito";
+            con.commit();
+        }catch (SQLException e){
+            resultado = "error_exception";
+            System.out.println("Error al Eliminar el libro: " + e);
+            System.out.println("El código error al Eliminar: " + e.getErrorCode());
             e.printStackTrace();
         }
         return resultado;

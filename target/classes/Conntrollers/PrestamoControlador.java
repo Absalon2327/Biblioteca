@@ -1,10 +1,9 @@
 package Conntrollers;
 
 import DAOs.Consulta5Dao;
+import DAOs.LibroDao;
 import DAOs.PrestamosDao;
-import Models.Alumno;
-import Models.Libro;
-import Models.Prestamo;
+import Models.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -27,6 +26,35 @@ public class PrestamoControlador extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        response.setContentType("application/json;charset=utf-8");
+
+        String id = request.getParameter("id");
+        JSONArray ArrayPrestamos = new JSONArray();
+        JSONObject objPrestamos= new JSONObject();
+        try {
+            PrestamosDao prestamosDao = new PrestamosDao();
+            ResultSet resultSet = prestamosDao.traerPrestamo(id);
+            while (resultSet.next()){
+                objPrestamos.put("resultado", "exito");
+                objPrestamos.put("alumno", resultSet.getString("alumno"));
+                objPrestamos.put("lirbo", resultSet.getString("idLibro"));
+                objPrestamos.put("fechaPrestamo", resultSet.getString("fechaPrestamo"));
+                objPrestamos.put("codigo", resultSet.getString("idPrestamo"));
+                objPrestamos.put("cantidad", resultSet.getString("cantidad"));
+                objPrestamos.put("fechaDevo", resultSet.getString("fechaDevolucion"));
+            }
+        }catch (SQLException e){
+            objPrestamos.put("resultado", "error_sql_prestamos");
+            objPrestamos.put("error", e.getMessage());
+            objPrestamos.put("code error", e.getErrorCode());
+            throw  new RuntimeException(e);
+        }catch (ClassNotFoundException e){
+            objPrestamos.put("resultado", "no se econtró la clase");
+            objPrestamos.put("error", e.getMessage());
+            throw new RuntimeException(e);
+        }
+        ArrayPrestamos.put(objPrestamos);
+        response.getWriter().write(ArrayPrestamos.toString());
     }
 
     @Override
@@ -90,6 +118,56 @@ public class PrestamoControlador extends HttpServlet{
                 }
                 arrayInsertPrestamo.put(objInsertPrestamo);
                 response.getWriter().write(arrayInsertPrestamo.toString());
+                break;
+            case "modificarPrestamo":
+                JSONArray ArrayModify = new JSONArray();
+                JSONObject objModify = new JSONObject();
+                String resultadoModicado = "";
+                Prestamo prestamoModify = new Prestamo();
+                Libro libro = new Libro();
+                Alumno alumno = new Alumno();
+                CategoriaLibros categoriaLibros = new CategoriaLibros();
+                try {
+                    String fechaprestamoM = request.getParameter("fechaPrestamo");
+                    String fechadevolucionM = request.getParameter("fechaDevolucion");
+                    SimpleDateFormat formatoM = new SimpleDateFormat("yyyy-MM-dd");
+                    Date fechapresM = null;
+                    Date fechadevoM = null;
+                    try {
+                        fechapresM = formatoM.parse(fechaprestamoM);
+                        fechadevoM = formatoM.parse(fechadevolucionM);
+                    }catch (ParseException e){
+                        throw new RuntimeException(e);
+                    }
+                    PrestamosDao presDao = new PrestamosDao();
+                    categoriaLibros.setCodigocategoria(request.getParameter("codigoCategoria"));
+                    alumno.setCarnet(request.getParameter("carnetAlumno"));
+                    libro.setCodigoLibro(request.getParameter("codigoLibro"));
+                    prestamoModify.setCodigoprestamo(request.getParameter("codigoPrestamo"));
+                    prestamoModify.setCodigolibro(libro);
+                    prestamoModify.setFechaprestamo(fechapresM);
+                    prestamoModify.setCarnetalumno(alumno);
+                    prestamoModify.setCantidadprestamo(Integer.parseInt(request.getParameter("cantidadPrestamo")));
+                    prestamoModify.setFechadevolucion(fechadevoM);
+                    resultadoModicado = presDao.modificarPrestamo(prestamoModify);
+                    if (resultadoModicado == "exito"){
+                        objModify.put("resultado", "exito");
+                    }else {
+                        objModify.put("resultado", "error");
+                        objModify.put("resultado_nodificar_prestamo", resultadoModicado);
+                    }
+                }catch (SQLException e){
+                    objModify.put("resultado", "error_sql_prestamo");
+                    objModify.put("resultado", e.getMessage());
+                    objModify.put("error_code", e.getErrorCode());
+                    throw new RuntimeException(e);
+                }catch (ClassNotFoundException e){
+                    objModify.put("resultado", "no existe la clase");
+                    objModify.put("error_mostrado", e);
+                    throw new RuntimeException(e);
+                }
+                ArrayModify.put(objModify);
+                response.getWriter().write(ArrayModify.toString());
                 break;
             case "mostrarPrestamos":
                 int con = 0;
@@ -164,5 +242,42 @@ public class PrestamoControlador extends HttpServlet{
                 response.getWriter().write(arrayPrestamos.toString());
                 break;
         }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json;charset=utf-8");
+
+        System.out.println("llego aquí");
+        String id = request.getParameter("id");
+        JSONArray arrayPrestamo = new JSONArray();
+        JSONObject ojectPrestamo = new JSONObject();
+        String resultadoEliminado = "";
+        try {
+            PrestamosDao prestamoDao = new PrestamosDao();
+            resultadoEliminado = prestamoDao.eliminarPrestamo(id);
+            if (resultadoEliminado == "exito"){
+                ojectPrestamo.put("resultado", "exito");
+            }else {
+                ojectPrestamo.put("resultado", "error");
+                ojectPrestamo.put("resultado_eliminar", resultadoEliminado);
+            }
+        }catch (SQLException e){
+            ojectPrestamo.put("resultado", "no existe la clase");
+            ojectPrestamo.put("error_code", e.getErrorCode());
+            ojectPrestamo.put("error_mostrado", e.getMessage());
+            throw new RuntimeException(e);
+        }catch (ClassNotFoundException e){
+            ojectPrestamo.put("resultado", "error_sql_prestamo");
+            ojectPrestamo.put("error_mostrado", e.getMessage());
+            throw new RuntimeException(e);
+        }
+        arrayPrestamo.put(ojectPrestamo);
+        response.getWriter().write(arrayPrestamo.toString());
     }
 }

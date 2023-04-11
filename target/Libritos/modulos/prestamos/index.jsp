@@ -181,9 +181,9 @@
     <script src="public/plugins/datatables/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript" src="public/plugins/parsleyjs/parsley.min.js"></script>
     <script src="public/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-
-
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11">
         <%@page import="java.time.LocalDateTime" %>
-        <%@ page import="java.time.temporal.ChronoField" %><%@ page import="DAOs.PrestamosDao"%><%@ page import="java.sql.ResultSet"%><%@ page import="Models.Libro"%>
+        <%@ page import="java.time.temporal.ChronoField" %><%@ page import="DAOs.PrestamosDao"%>
+        <%@ page import="java.sql.ResultSet"%>
+        <%@ page import="Models.Libro"%>
     </script><script src="./modulos/prestamos/funciones_prestamos.js"></script>

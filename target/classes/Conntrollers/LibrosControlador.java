@@ -39,6 +39,7 @@ public class LibrosControlador extends HttpServlet {
                 objLibros.put("titulo", resultSet.getString("titulo"));
                 objLibros.put("existencia", resultSet.getString("existencia"));
                 objLibros.put("categoria", resultSet.getString("categoria"));
+                objLibros.put("precio", resultSet.getString("precio"));
                 objLibros.put("autor", resultSet.getString("autor"));
             }
         }catch (SQLException e){
@@ -123,6 +124,7 @@ public class LibrosControlador extends HttpServlet {
                     lirboModify.setTituloLibro(request.getParameter("tituloLibro"));
                     lirboModify.setExistencia(Integer.parseInt(request.getParameter("Existencia")));
                     lirboModify.setCodigoCategoria(categoriaLibros);
+                    lirboModify.setPrecio(Double.parseDouble(request.getParameter("Precio")));
                     lirboModify.setCodigoAutor(autor);
                     resultadoModicado = libroDao.modificarLibro(lirboModify);
                     if (resultadoModicado == "exito"){
@@ -220,6 +222,39 @@ public class LibrosControlador extends HttpServlet {
 
         response.setContentType("application/json;charset=utf-8");
         System.out.println("entró al editar");
+
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json;charset=utf-8");
+
+        System.out.println("llego aquí");
+        String id = request.getParameter("id");
+        JSONArray arrayLibro = new JSONArray();
+        JSONObject ojectLibro = new JSONObject();
+        String resultadoEliminado = "";
+        try {
+            LibroDao libroDao = new LibroDao();
+            resultadoEliminado = libroDao.eliminarLibro(id);
+            if (resultadoEliminado == "exito"){
+                ojectLibro.put("resultado", "exito");
+            }else {
+                ojectLibro.put("resultado", "error");
+                ojectLibro.put("resultado_eliminar", resultadoEliminado);
+            }
+        }catch (SQLException e){
+            ojectLibro.put("resultado", "no existe la clase");
+            ojectLibro.put("error_code", e.getErrorCode());
+            ojectLibro.put("error_mostrado", e.getMessage());
+            throw new RuntimeException(e);
+        }catch (ClassNotFoundException e){
+            ojectLibro.put("resultado", "error_sql_libro");
+            ojectLibro.put("error_mostrado", e.getMessage());
+            throw new RuntimeException(e);
+        }
+        arrayLibro.put(ojectLibro);
+        response.getWriter().write(arrayLibro.toString());
 
     }
 }
